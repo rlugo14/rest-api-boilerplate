@@ -1,0 +1,5 @@
+## node packages folder
+./node_modules
+
+## dotenv
+.env
