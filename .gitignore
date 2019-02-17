@@ -1,5 +1,6 @@
-## node packages folder
-./node_modules
+## node packages folder and lock.json
+./node_modules/
+package-lock.json
 
 ## dotenv
 .env
