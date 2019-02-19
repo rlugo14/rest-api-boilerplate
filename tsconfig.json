@@ -1,14 +1,15 @@
 {
     "compilerOptions": {
+      "module": "commonjs",
       "sourceMap": true,
-      "target": "es2017",
-      "outDir": "./dist",
-      "baseUrl": "./src/"
+      "target": "es2018",
+      "outDir": "dist",
+      "baseUrl": "."
     },
     "include": [
       "src/**/*.ts"
     ],
     "exclude": [
-      "node_modules"
+      "node_modules", "src/public"
     ]
   }

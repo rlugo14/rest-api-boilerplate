@@ -1,23 +1,23 @@
-import * as express from 'express';
-import IUser from './interfaces/IUsers';
+import * as express from "express";
+import IUser from "./interfaces/IUser";
 
 class UsersController {
-  public path = '/users';
+  public path = "/users";
   public router = express.Router();
 
   private users: IUser[] = [
     {
-        username: 'rlugo14',
-        firstName: 'Raul',
-        lastName: 'Lugo',
-        email: 'rlugo14@gmail.com',
-        address: {
-            street: 'Schmiedestrasse',
-            houseNumber: '2',
-            postNumber: 40227,
-            city: 'Duesseldorf',
-            country: 'Germany'
-    }
+      address: {
+        city: "Duesseldorf",
+        country: "Germany",
+        houseNumber: "2",
+        postNumber: 40227,
+        street: "Schmiedestrasse",
+      },
+      email: "rlugo14@gmail.com",
+      firstName: "Raul",
+      lastName: "Lugo",
+      username: "rlugo14",
     }
   ];
 
@@ -30,19 +30,19 @@ class UsersController {
     this.router.post(this.path, this.createAUser);
   }
 
-  getAllUsers = (request: express.Request, response: express.Response) => {
+  public getAllUsers = (request: express.Request, response: express.Response) => {
     response.send(this.users);
   }
 
-  createAUser = (request: express.Request, response: express.Response) => {
+  public createAUser = (request: express.Request, response: express.Response) => {
     const user: IUser = request.body;
     this.users.push(user);
     response.send(user);
   }
 
-  deleteAUser = (request: express.Request, response: express.Response) => {
+  // public deleteAUser = (request: express.Request, response: express.Response) => {
 
-  }
+  // }
 }
 
 export default UsersController;

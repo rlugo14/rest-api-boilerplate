@@ -1,7 +1,9 @@
-import App from './app';
-import UsersController from './users/usersController';
-import * as mongoose from 'mongoose';
-import 'dotenv/config';
+import * as dotenv from "dotenv";
+import * as mongoose from "mongoose";
+import App from "./app";
+import UsersController from "./users/usersController";
+
+dotenv.config();
 
 const {
   MONGO_PREFIX,
