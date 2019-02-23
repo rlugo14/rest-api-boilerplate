@@ -4,14 +4,14 @@
   "description": "",
   "main": "./dist/server.js",
   "scripts": {
+    "dev": "nodemon --watch src --ext ts --exec npm run dev:start",
+    "dev:start": "npm-run-all build start",
+    "build": "npm-run-all clean lint tsc",
     "clean": "rimraf dist/*",
     "lint": "tslint -c tslint.json -p tsconfig.json --fix",
     "tsc": "tsc",
-    "build": "npm-run-all clean lint tsc",
-    "dev:start": "npm-run-all build start",
-    "dev": "nodemon",
-    "dev:typescript": "nodemon --watch src -e ts --exec ts-node ./src/server.ts",
-    "start": "node ."
+    "start": "node -r dotenv/config .",
+    "dev:typescript": "nodemon --watch src -e ts --exec ts-node ./src/server.ts"
   },
   "keywords": [],
   "author": "",

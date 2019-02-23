@@ -1,22 +1,24 @@
 import * as bodyParser from "body-parser";
+import "dotenv/config";
 import * as express from "express";
+import * as mongoose from "mongoose";
+import IController from "./interfaces/IController";
 
 class App {
   public app: express.Application;
-  public port: number;
 
-  constructor(controllers, port) {
+  constructor(controllers: IController[]) {
     this.app = express();
-    this.port = port;
 
     this.initializeMiddlewares();
     this.initializeControllers(controllers);
+    this.connectToDatabase();
   }
 
   public listen() {
-    this.app.listen(this.port, () => {
+    this.app.listen(process.env.PORT, () => {
       // tslint:disable-next-line
-      console.log(`App listening on the port ${this.port}`);
+      console.log(`App listening on the port ${process.env.PORT}`);
     });
   }
 
@@ -28,6 +30,17 @@ class App {
     controllers.forEach((controller) => {
       this.app.use("/", controller.router);
     });
+  }
+
+  private connectToDatabase() {
+    const {
+      MONGO_PREFIX,
+      MONGO_USER,
+      MONGO_PASSWORD,
+      MONGO_PATH,
+    } = process.env;
+
+    mongoose.connect(`${MONGO_PREFIX}${MONGO_USER}:${MONGO_PASSWORD}${MONGO_PATH}`, { useNewUrlParser: true });
   }
 }
 

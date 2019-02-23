@@ -1,4 +1,8 @@
 interface IUser {
+  username: string;
+  firstName: string;
+  lastName: string;
+  email: string;
   address: {
     city: string;
     country: string;
@@ -6,10 +10,6 @@ interface IUser {
     street: string;
     postNumber: number;
   };
-  email: string;
-  firstName: string;
-  lastName: string;
-  username: string;
   }
 
 export default IUser;

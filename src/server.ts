@@ -1,24 +1,13 @@
-import * as dotenv from "dotenv";
-import * as mongoose from "mongoose";
 import App from "./app";
 import UsersController from "./users/usersController";
+import validateEnv from "./utils/validateEnv";
 
-dotenv.config();
-
-const {
-  MONGO_PREFIX,
-  MONGO_USER,
-  MONGO_PASSWORD,
-  MONGO_PATH,
-} = process.env;
-
-mongoose.connect(`${MONGO_PREFIX}${MONGO_USER}:${MONGO_PASSWORD}${MONGO_PATH}`, { useNewUrlParser: true });
+validateEnv();
 
 const app = new App(
   [
     new UsersController(),
-  ],
-  5000,
+  ]
 );
 
 app.listen();

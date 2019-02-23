@@ -1,5 +1,5 @@
 import * as express from "express";
-import IUser from "./interfaces/IUser";
+import IUser from "./IUser";
 
 class UsersController {
   public path = "/users";
@@ -7,6 +7,10 @@ class UsersController {
 
   private users: IUser[] = [
     {
+      username: "rlugo14",
+      firstName: "Raul",
+      lastName: "Lugo",
+      email: "rlugo14@gmail.com",
       address: {
         city: "Duesseldorf",
         country: "Germany",
@@ -14,10 +18,6 @@ class UsersController {
         postNumber: 40227,
         street: "Schmiedestrasse",
       },
-      email: "rlugo14@gmail.com",
-      firstName: "Raul",
-      lastName: "Lugo",
-      username: "rlugo14",
     }
   ];
 
@@ -40,9 +40,6 @@ class UsersController {
     response.send(user);
   }
 
-  // public deleteAUser = (request: express.Request, response: express.Response) => {
-
-  // }
 }
 
 export default UsersController;
