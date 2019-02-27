@@ -3,6 +3,7 @@ import "dotenv/config";
 import * as express from "express";
 import * as mongoose from "mongoose";
 import IController from "./interfaces/IController";
+import errorMiddleware from "./middleware/errorMiddleware";
 
 class App {
   public app: express.Application;
@@ -10,26 +11,10 @@ class App {
   constructor(controllers: IController[]) {
     this.app = express();
 
+    this.connectToDatabase();
     this.initializeMiddlewares();
     this.initializeControllers(controllers);
-    this.connectToDatabase();
-  }
-
-  public listen() {
-    this.app.listen(process.env.PORT, () => {
-      // tslint:disable-next-line
-      console.log(`App listening on the port ${process.env.PORT}`);
-    });
-  }
-
-  private initializeMiddlewares() {
-    this.app.use(bodyParser.json());
-  }
-
-  private initializeControllers(controllers) {
-    controllers.forEach((controller) => {
-      this.app.use("/", controller.router);
-    });
+    this.initializeErrorHandling();
   }
 
   private connectToDatabase() {
@@ -42,6 +27,28 @@ class App {
 
     mongoose.connect(`${MONGO_PREFIX}${MONGO_USER}:${MONGO_PASSWORD}${MONGO_PATH}`, { useNewUrlParser: true });
   }
+
+  private initializeMiddlewares() {
+    this.app.use(bodyParser.json());
+  }
+
+  private initializeControllers(controllers) {
+    controllers.forEach((controller) => {
+      this.app.use("/", controller.router);
+    });
+  }
+
+  private initializeErrorHandling() {
+    this.app.use(errorMiddleware);
+  }
+
+  public listen() {
+    this.app.listen(process.env.PORT, () => {
+      // tslint:disable-next-line
+      console.log(`App listening on the port ${process.env.PORT}`);
+    });
+  }
+
 }
 
 export default App;
