@@ -19,13 +19,11 @@ class App {
 
   private connectToDatabase() {
     const {
-      MONGO_PREFIX,
       MONGO_USER,
       MONGO_PASSWORD,
-      MONGO_PATH,
+      DB_PATH
     } = process.env;
-
-    mongoose.connect(`${MONGO_PREFIX}${MONGO_USER}:${MONGO_PASSWORD}${MONGO_PATH}`, { useNewUrlParser: true });
+    mongoose.connect(`mongodb+srv://${MONGO_USER}:${MONGO_PASSWORD}${DB_PATH}`, { useNewUrlParser: true });
   }
 
   private initializeMiddlewares() {
