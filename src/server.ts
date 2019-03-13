@@ -1,5 +1,5 @@
 import App from "./app";
-import UsersController from "./users/usersController";
+import UsersController from "./users/users.controller";
 import validateEnv from "./utils/validateEnv";
 
 validateEnv();

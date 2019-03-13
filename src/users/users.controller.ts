@@ -1,12 +1,12 @@
 import { NextFunction } from "connect";
 import * as express from "express";
 import HttpException from "../exceptions/HttpException";
-import PostNotFoundException from "../exceptions/PostNotFoundException";
-import IController from "../interfaces/IController";
-import IUser from "./IUser";
-import userModel from "./usersModel";
+import UserNotFoundException from "../exceptions/UsertNotFoundException";
+import IController from "../interfaces/controllers.interface";
+import IUser from "./users.interface";
+import userModel from "./users.model";
 
-class IUsersController implements IController {
+class UsersController implements IController {
   public path = "/users";
   public router = express.Router();
   private user = userModel;
@@ -16,17 +16,17 @@ class IUsersController implements IController {
   }
 
   public intializeRoutes() {
-    this.router.get(this.path, this.getAllIUsers);
+    this.router.get(this.path, this.getAllUsers);
     this.router.get(`${this.path}/:id`, this.getUserById);
     this.router.put(`${this.path}/:id`, this.modifyUser);
     this.router.delete(`${this.path}/:id`, this.deleteUser);
     this.router.post(this.path, this.createUser);
   }
 
-  public getAllIUsers = (response: express.Response) => {
-    this.user.find()
-    .then((posts) => {
-      response.send(posts);
+  public getAllUsers = (request: express.Request, response: express.Response) => {
+    this.user.find({})
+    .then((users) => {
+      response.send(users);
     });
   }
 
@@ -37,7 +37,7 @@ class IUsersController implements IController {
       if (user) {
         response.send(user);
       } else {
-        next(new PostNotFoundException(id));
+        next(new UserNotFoundException(id));
       }
     });
   }
@@ -45,12 +45,12 @@ class IUsersController implements IController {
   public modifyUser = (request: express.Request, response: express.Response, next: NextFunction) => {
     const id = request.params.id;
     const userData: IUser = request.body;
-    this.user.findByIdAndUpdate(id, userData, { new: true })
+    this.user.findOneAndUpdate(id, userData, { new: true })
     .then((user) => {
       if (user) {
         response.send(user);
       } else {
-        next(new PostNotFoundException(id));
+        next(new UserNotFoundException(id));
       }
     });
   }
@@ -60,9 +60,12 @@ class IUsersController implements IController {
     this.user.findByIdAndDelete(id)
     .then((successResponse) => {
       if (successResponse) {
-        response.sendStatus(200);
+        response.json({
+          status: 200,
+          message: `the user with id: ${id} was deleted successfully`
+        });
       } else {
-        next(new PostNotFoundException(id));
+        next(new UserNotFoundException(id));
       }
     });
   }
@@ -77,4 +80,4 @@ class IUsersController implements IController {
   }
 }
 
-export default IUsersController;
+export default UsersController;

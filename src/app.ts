@@ -2,8 +2,8 @@ import * as bodyParser from "body-parser";
 import "dotenv/config";
 import * as express from "express";
 import * as mongoose from "mongoose";
-import IController from "./interfaces/IController";
-import errorMiddleware from "./middleware/errorMiddleware";
+import IController from "./interfaces/controllers.interface";
+import errorMiddleware from "./middleware/error.middleware";
 
 const {
   MONGO_USER,
