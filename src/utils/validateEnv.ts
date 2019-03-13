@@ -5,7 +5,8 @@ export default function validateEnv() {
     cleanEnv(process.env, {
         MONGO_USER: str(),
         MONGO_PASSWORD: str(),
-        DB_PATH: str(),
+        DB_CONNECTION_STRING: str(),
+        DB_SERVER: str(),
         PORT: port(),
     });
 }

@@ -21,9 +21,19 @@ class App {
     const {
       MONGO_USER,
       MONGO_PASSWORD,
-      DB_PATH
+      DB_CONNECTION_STRING,
+      DB_SERVER,
     } = process.env;
-    mongoose.connect(`mongodb+srv://${MONGO_USER}:${MONGO_PASSWORD}${DB_PATH}`, { useNewUrlParser: true });
+
+    const DB_URL = `${DB_CONNECTION_STRING}${MONGO_USER}:${MONGO_PASSWORD}${DB_SERVER}`;
+
+    mongoose.connect(DB_URL, {useNewUrlParser: true},
+    (error: mongoose.Error) => {
+      if (error) {
+        // tslint:disable-next-line
+        console.log("Initial database connection error: " + error.message);
+      }
+    });
   }
 
   private initializeMiddlewares() {
