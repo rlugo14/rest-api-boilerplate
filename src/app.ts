@@ -5,6 +5,14 @@ import * as mongoose from "mongoose";
 import IController from "./interfaces/IController";
 import errorMiddleware from "./middleware/errorMiddleware";
 
+const {
+  MONGO_USER,
+  MONGO_PASSWORD,
+  DB_CONNECTION_STRING,
+  DB_SERVER,
+  PORT
+} = process.env;
+
 class App {
   public app: express.Application;
 
@@ -18,22 +26,18 @@ class App {
   }
 
   private connectToDatabase() {
-    const {
-      MONGO_USER,
-      MONGO_PASSWORD,
-      DB_CONNECTION_STRING,
-      DB_SERVER,
-    } = process.env;
-
     const DB_URL = `${DB_CONNECTION_STRING}${MONGO_USER}:${MONGO_PASSWORD}${DB_SERVER}`;
 
-    mongoose.connect(DB_URL, {useNewUrlParser: true},
-    (error: mongoose.Error) => {
-      if (error) {
-        // tslint:disable-next-line
-        console.log("Initial database connection error: " + error.message);
+    mongoose.connect(DB_URL, {useNewUrlParser: true}).then(
+      () => {
+        // tslint:disable-next-line: no-console
+        console.log("Database connected successfully!!!");
+      },
+      (error: mongoose.Error) => {
+        // tslint:disable-next-line: no-console
+        console.log("Database connection error: " + error.message);
       }
-    });
+    );
   }
 
   private initializeMiddlewares() {
@@ -51,9 +55,9 @@ class App {
   }
 
   public listen() {
-    this.app.listen(process.env.PORT, () => {
+    this.app.listen(PORT, () => {
       // tslint:disable-next-line
-      console.log(`App listening on the port ${process.env.PORT}`);
+      console.log(`App listening on the port ${PORT}`);
     });
   }
 
