@@ -3,9 +3,6 @@ import * as express from "express";
 import HttpException from "../exceptions/HttpException";
 import UserNotFoundException from "../exceptions/UsertNotFoundException";
 import IController from "../interfaces/controllers.interface";
-import validationMiddleware from "../middleware/validation.middleware";
-import CreateAddressDto from "./adresses/addresses.dto";
-import { CreateUserDto } from "./users.dto";
 import IUser from "./users.interface";
 import userModel from "./users.model";
 
@@ -23,7 +20,7 @@ class UsersController implements IController {
     this.router.get(`${this.path}/:id`, this.getUserById);
     this.router.put(`${this.path}/:id`, this.modifyUser);
     this.router.delete(`${this.path}/:id`, this.deleteUser);
-    this.router.post(this.path, validationMiddleware(CreateUserDto), this.createUser);
+    this.router.post(this.path, this.createUser);
   }
 
   public getAllUsers = (request: express.Request, response: express.Response) => {
