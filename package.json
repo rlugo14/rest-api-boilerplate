@@ -22,7 +22,8 @@
     "envalid": "^4.2.2",
     "express": "^4.16.4",
     "mongoose": "^5.4.13",
-    "ts-node": "^8.0.2"
+    "ts-node": "^8.0.2",
+    "typegoose": "^5.6.0"
   },
   "devDependencies": {
     "@types/body-parser": "^1.17.0",

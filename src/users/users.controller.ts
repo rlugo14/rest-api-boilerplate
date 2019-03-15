@@ -4,7 +4,7 @@ import HttpException from "../exceptions/HttpException";
 import UserNotFoundException from "../exceptions/UsertNotFoundException";
 import IController from "../interfaces/controllers.interface";
 import IUser from "./users.interface";
-import userModel from "./users.model";
+import UserSchema from "./users.model";
 
 class UsersController implements IController {
   public path = "/users";
