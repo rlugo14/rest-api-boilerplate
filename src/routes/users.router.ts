@@ -1,12 +1,13 @@
 import * as express from "express";
+import * as mongoose from "mongoose";
 import UsersController from "../controllers/users.controller";
 import Router from "../interfaces/routers.interface";
 
 class UsersRouter implements Router {
     public expressRouter: express.Router = express.Router();
 
-    constructor() {
-        const userController = new UsersController();
+    constructor(dbConnection: mongoose.Connection) {
+        const userController = new UsersController(dbConnection);
         this.initializeRoutes(userController);
     }
 

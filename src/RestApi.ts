@@ -11,7 +11,6 @@ class RestApi {
   constructor(router: UsersRouter) {
     this.expressApp = express();
     this.expressApp.use("/", router.expressRouter);
-    connectToDatabase();
     this.initializeMiddlewares();
     this.initializeErrorHandling();
   }

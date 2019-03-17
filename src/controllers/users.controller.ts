@@ -1,5 +1,6 @@
 import { NextFunction } from "connect";
 import * as express from "express";
+import * as mongoose from "mongoose";
 import UserNotFoundException from "../exceptions/UsertNotFoundException";
 import Controller from "../interfaces/controllers.interface";
 import UserSchema from "../models/users.model";
@@ -8,8 +9,8 @@ import UsersRouter from "../routes/users.router";
 class UsersController implements Controller {
     public user;
 
-    constructor() {
-        this.user = new UserSchema().getModelForClass(UserSchema);
+    constructor(dbConnection: mongoose.Connection) {
+        this.user = new UserSchema().getModelForClass(UserSchema, {existingConnection: dbConnection});
     }
 
     public getAll = (request: express.Request, response: express.Response) => {

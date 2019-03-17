@@ -12,7 +12,7 @@ const {
     DB_SERVER
 } = process.env;
 
-export default function connectToDatabase(): void {
+export default function connectToDatabase(): mongoose.Connection {
 
     const DB_URL = `${DB_CONNECTION_STRING}${MONGO_USER}:${MONGO_PASSWORD}${DB_SERVER}`;
 
@@ -26,4 +26,6 @@ export default function connectToDatabase(): void {
             console.log("Database connection error: " + error.message);
         }
     );
+
+    return mongoose.createConnection(DB_URL);
 }
