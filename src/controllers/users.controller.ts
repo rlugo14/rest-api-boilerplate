@@ -1,17 +1,12 @@
 import { NextFunction } from "connect";
 import * as express from "express";
-import * as mongoose from "mongoose";
-import UserNotFoundException from "../exceptions/UsertNotFoundException";
-import Controller from "../interfaces/controllers.interface";
-import UserSchema from "../models/users.model";
-import UsersRouter from "../routes/users.router";
+import { UserNotFoundException } from "../exceptions";
+import { HttpException } from "../exceptions/HttpException";
+import { IController } from "../interfaces";
+import userModel from "../models/users.model";
 
-class UsersController implements Controller {
-    public user;
-
-    constructor(dbConnection: mongoose.Connection) {
-        this.user = new UserSchema().getModelForClass(UserSchema, {existingConnection: dbConnection});
-    }
+class UsersController implements IController {
+    public user = userModel;
 
     public getAll = (request: express.Request, response: express.Response) => {
         this.user.find({})
@@ -32,18 +27,21 @@ class UsersController implements Controller {
             });
     }
 
-    public create = (request: express.Request, response: express.Response) => {
+    public create = (request: express.Request, response: express.Response, next: NextFunction) => {
         const userData = request.body;
         const createdIUser = new this.user(userData);
         createdIUser.save()
             .then((savedPost) => {
                 response.send(savedPost);
+            })
+            .catch( (error: Error) => {
+                next(new HttpException(400, error.message));
             });
     }
 
     public updateById = (request: express.Request, response: express.Response, next: NextFunction) => {
         const id = request.params.id;
-        const userData: UserSchema = request.body;
+        const userData = request.body;
         this.user.findOneAndUpdate(id, userData, { new: true })
             .then((user) => {
                 if (user) {
