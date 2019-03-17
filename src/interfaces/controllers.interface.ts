@@ -1,10 +1,10 @@
 import { NextFunction } from "connect";
-import { Application, Request, Response } from "express";
-import UserSchema from "../models/users.models";
+import * as express from "express";
+import { Request, Response } from "express";
+import { Model, Mongoose } from "mongoose";
+import { Typegoose } from "typegoose";
+import UserSchema from "../models/users.model";
 interface IController {
-    app: Application;
-    path: string;
-    UserSchema: UserSchema;
     getAll: (req: Request, res: Response, next: NextFunction) => void;
     getById: (req: Request, res: Response, next: NextFunction) => void;
     create: (req: Request, res: Response, next: NextFunction) => void;

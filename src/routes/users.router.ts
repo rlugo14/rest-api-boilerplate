@@ -1,24 +1,23 @@
 import * as express from "express";
 import UsersController from "../controllers/users.controller";
+import Router from "../interfaces/routers.interface";
 
-class UsersRouter {
-    public app: express.Application;
-    private controller: UsersController;
+class UsersRouter implements Router {
+    public expressRouter: express.Router = express.Router();
 
-    constructor(app: express.Application) {
-        this.app = app;
-        this.controller = new UsersController(app, this.path);
+    constructor() {
+        const userController = new UsersController();
+        this.initializeRoutes(userController);
     }
 
-    public initializeRoutes() {
+    public initializeRoutes(controller) {
         const path: string = "/users";
-        const router = express.Router();
 
-        router.get(`${path}`, this.controller.getAll);
-        router.get(`${path}/:id`, this.controller.getById);
-        router.post(`${path}`, this.controller.create);
-        router.put(`${path}/:id`, this.controller.updateById);
-        router.delete(`${path}/:id`, this.controller.deleteById);
+        this.expressRouter.get(path, controller.getAll);
+        this.expressRouter.get(`${path}/:id`, controller.getById);
+        this.expressRouter.post(path, controller.create);
+        this.expressRouter.put(`${path}/:id`, controller.updateById);
+        this.expressRouter.delete(`${path}/:id`, controller.deleteById);
     }
 }
 

@@ -2,20 +2,17 @@ import { NextFunction } from "connect";
 import * as express from "express";
 import UserNotFoundException from "../exceptions/UsertNotFoundException";
 import Controller from "../interfaces/controllers.interface";
-import UserSchema from "../models/users.models";
+import UserSchema from "../models/users.model";
+import UsersRouter from "../routes/users.router";
 
 class UsersController implements Controller {
-    public app: express.Application;
-    public path: string;
-    public UserSchema;
-    private user = new UserSchema().getModelForClass(UserSchema);
+    public user;
 
-    constructor(app: express.Application, path: string) {
-        this.app = app;
-        this.path = path;
+    constructor() {
+        this.user = new UserSchema().getModelForClass(UserSchema);
     }
 
-    public getAll = (request: express.Request, response: express.Response, next: NextFunction) => {
+    public getAll = (request: express.Request, response: express.Response) => {
         this.user.find({})
             .then((users) => {
                 response.send(users);
@@ -45,7 +42,7 @@ class UsersController implements Controller {
 
     public updateById = (request: express.Request, response: express.Response, next: NextFunction) => {
         const id = request.params.id;
-        const userData: IUser = request.body;
+        const userData: UserSchema = request.body;
         this.user.findOneAndUpdate(id, userData, { new: true })
             .then((user) => {
                 if (user) {

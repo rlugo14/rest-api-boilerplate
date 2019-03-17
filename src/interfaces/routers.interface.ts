@@ -1,7 +1,10 @@
-import { Router } from "express";
+import express = require("express");
+import UsersController from "../controllers/users.controller";
+import Controller from "../interfaces/controllers.interface";
 
 interface IRouter {
-    path: string;
+    expressRouter: express.Router;
+    initializeRoutes: (_: UsersController) => void;
 }
 
 export default IRouter;

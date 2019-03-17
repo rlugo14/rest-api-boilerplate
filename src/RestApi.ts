@@ -1,40 +1,39 @@
 import * as bodyParser from "body-parser";
 import * as express from "express";
-import IController from "./interfaces/controllers.interface";
+import UsersController from "./controllers/users.controller";
 import errorMiddleware from "./middlewares/error.middleware";
+import UsersRouter from "./routes/users.router";
 import connectToDatabase from "./utils/databaseConnector";
 
 class RestApi {
-  public app: express.Application;
+  public expressApp: express.Application;
 
-  constructor(controllers: IController[]) {
-    this.app = express();
-
+  constructor(router: UsersRouter) {
+    this.expressApp = express();
+    this.expressApp.use("/", router.expressRouter);
     connectToDatabase();
     this.initializeMiddlewares();
-    this.initializeControllers(controllers);
     this.initializeErrorHandling();
   }
 
-  private initializeMiddlewares() {
-    this.app.use(bodyParser.json());
+  public listen() {
+    this.expressApp.listen(process.env.PORT);
   }
 
-  private initializeControllers(controllers) {
-    controllers.forEach((controller) => {
-      this.app.use("/", controller.router);
-    });
+ // private initializeRoutes(router) {
+ //   router.initializeRouters(controller);
+ // }
+
+//  private initializeController(router) {
+//    this.expressApp.use("/", router.expressRouter);
+//  }
+
+  private initializeMiddlewares() {
+    this.expressApp.use(bodyParser.json());
   }
 
   private initializeErrorHandling() {
-    this.app.use(errorMiddleware);
-  }
-
-  public listen() {
-    this.app.listen(process.env.PORT, () => {
-      // tslint:disable-next-line
-      console.log(`Rest API listening on the port ${process.env.PORT}`);
-    });
+    this.expressApp.use(errorMiddleware);
   }
 
 }

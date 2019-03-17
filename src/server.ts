@@ -1,13 +1,10 @@
+import UsersController from "./controllers/users.controller";
 import RestApi from "./RestApi";
-import UsersController from "./users/users.controller";
+import UsersRouter from "./routes/users.router";
 import validateEnv from "./utils/validateEnv";
 
 validateEnv();
 
-const api = new RestApi(
-  [
-    new UsersController(),
-  ]
-);
+const api = new RestApi(new UsersRouter());
 
 api.listen();
