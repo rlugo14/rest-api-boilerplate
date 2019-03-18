@@ -5,30 +5,32 @@ import UsersRouter from "./routes/users.router";
 import connectToDatabase from "./utils/databaseConnector";
 
 class RestApi {
-  public expressApp: express.Application = express();
+	public expressApp: express.Application = express();
 
-  constructor(router: UsersRouter) {
-    connectToDatabase();
-    this.initializeMiddlewares();
-    this.initializeRouter(router);
-    this.initializeErrorHandling();
-  }
+	constructor(router: UsersRouter[]) {
+		connectToDatabase();
+		this.initializeMiddlewares();
+		this.initializeRouter(router);
+		this.initializeErrorHandling();
+	}
 
-  public listen() {
-    this.expressApp.listen(process.env.PORT);
-  }
+	public listen() {
+		this.expressApp.listen(process.env.PORT);
+	}
 
-  private initializeRouter(router) {
-    this.expressApp.use("/", router.expressRouter);
-  }
+	private initializeRouter(routers) {
+		routers.forEach((router) => {
+			this.expressApp.use("/", router.expressRouter);
+		});
+	}
 
-  private initializeMiddlewares() {
-    this.expressApp.use(bodyParser.json());
-  }
+	private initializeMiddlewares() {
+		this.expressApp.use(bodyParser.json());
+	}
 
-  private initializeErrorHandling() {
-    this.expressApp.use(errorMiddleware);
-  }
+	private initializeErrorHandling() {
+		this.expressApp.use(errorMiddleware);
+	}
 
 }
 

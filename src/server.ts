@@ -4,6 +4,8 @@ import validateEnv from "./utils/validateEnv";
 
 validateEnv();
 
-const api = new RestApi(new UsersRouter());
+const api = new RestApi([
+	new UsersRouter()
+]);
 
 api.listen();

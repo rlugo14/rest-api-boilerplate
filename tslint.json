@@ -1,12 +1,8 @@
 {
-    "defaultSeverity": "error",
-    "extends": [
-        "tslint:recommended"
-    ],
-    "jsRules": {},
-    "rules": {
-        "trailing-comma": [ false ],
-        "object-literal-sort-keys": false
-    },
-    "rulesDirectory": []
+	"defaultSeverity": "error",
+	"rules": {
+		"trailing-comma": [ false ],
+		"indent": [true, "tabs", 4],
+		"object-literal-sort-keys": false
+	},
 }

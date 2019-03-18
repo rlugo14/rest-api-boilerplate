@@ -21,9 +21,9 @@
     "dotenv": "^6.2.0",
     "envalid": "^4.2.2",
     "express": "^4.16.4",
+    "express-validator": "^5.3.1",
     "mongoose": "^5.4.13",
-    "ts-node": "^8.0.2",
-    "typegoose": "^5.6.0"
+    "ts-node": "^8.0.2"
   },
   "devDependencies": {
     "@types/body-parser": "^1.17.0",
