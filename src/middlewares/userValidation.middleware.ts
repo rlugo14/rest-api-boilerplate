@@ -1,48 +1,49 @@
 import * as express from "express";
 import { validationResult, body } from "express-validator/check";
 import { NextFunction } from "connect";
+import { RequestHandlerParams } from "express-serve-static-core";
 
-export const userChecks = [
+export const userChecksMiddleware: RequestHandlerParams = [
 	body("username")
 		.exists()
 		.isAlphanumeric()
-		.withMessage("param should be alphanumeric"),
+		.withMessage("value should be alphanumeric"),
 
 	body("firstname")
 		.isString()
-		.withMessage("param should be a string"),
+		.withMessage("value should be a string"),
 
 	body("lastname")
 		.isString()
-		.withMessage("param should be a string"),
+		.withMessage("value should be a string"),
 
 	body("email")
 		.isEmail()
-		.withMessage("param should be a valid email"),
+		.withMessage("value should be a valid email"),
 
 	body("address")
 		.not().isEmpty()
-		.withMessage("param address should not be empty"),
+		.withMessage("value should not be empty"),
 
 	body("address.city")
 		.isString()
-		.withMessage("param should be a string"),
+		.withMessage("value should be a string"),
 
 	body("address.country")
 		.isString()
-		.withMessage("param should be a string"),
+		.withMessage("value should be a string"),
 
 	body("address.houseNumber")
 		.isAlphanumeric()
-		.withMessage("param should be a alphanumeric"),
+		.withMessage("value should be a alphanumeric"),
 
 	body("address.street")
 		.isString()
-		.withMessage("param should be a string"),
+		.withMessage("value should be a string"),
 
 	body("address.postNumber")
 		.isPostalCode("DE")
-		.withMessage("param should be a german postal code"),
+		.withMessage("value should be a german postal code"),
 
 	function (req: express.Request, res: express.Response, next: NextFunction) {
 		const validationErrors = validationResult(req);
@@ -50,9 +51,11 @@ export const userChecks = [
 			res.status(400).json({
 				status: 400,
 				message: "Bad Request",
-				errors: validationErrors.array()})
+				errors: validationErrors.array()});
+		}else {
+			next();
 		};
-		next();
+
 	},
 ]
 

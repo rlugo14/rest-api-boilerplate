@@ -2,7 +2,7 @@
 import * as express from "express";
 import UsersController from "../controllers/users.controller";
 import { IRouter } from "../interfaces";
-import { userChecks } from "../middlewares/validation.middleware";
+import { userChecksMiddleware } from "../middlewares/userValidation.middleware";
 
 class UsersRouter implements IRouter {
 	public expressRouter: express.Router = express.Router();
@@ -18,10 +18,7 @@ class UsersRouter implements IRouter {
 		this.expressRouter.get(path, controller.getAll);
 		this.expressRouter.get(`${path}/:id`, controller.getById);
 
-		this.expressRouter.post(
-			path,
-			userChecks,
-			controller.create);
+		this.expressRouter.post(path, controller.create);
 
 		this.expressRouter.put(`${path}/:id`, controller.updateById);
 

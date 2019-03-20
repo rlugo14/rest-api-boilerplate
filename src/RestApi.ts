@@ -1,6 +1,6 @@
 import * as bodyParser from "body-parser";
 import * as express from "express";
-import errorMiddleware from "./middlewares/error.middleware";
+import { errorMiddleware, userChecksMiddleware } from "./middlewares";
 import UsersRouter from "./routes/users.router";
 import connectToDatabase from "./utils/databaseConnector";
 
@@ -26,6 +26,7 @@ class RestApi {
 
 	private initializeMiddlewares() {
 		this.expressApp.use(bodyParser.json());
+		this.expressApp.use(userChecksMiddleware)
 	}
 
 	private initializeErrorHandling() {
