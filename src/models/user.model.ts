@@ -1,9 +1,23 @@
-import { IAddress } from "./address.model";
+import { Model } from "mongoose";
+import { prop, Ref, Typegoose } from "typegoose";
+import { Address } from "./address.model";
 
-export interface IUser {
-	username: string;
-	firstname: string;
-	lastname: string;
-	email: string;
-	address?: IAddress;
+export class User extends Typegoose {
+
+	@prop()
+	public username: string;
+
+	@prop()
+	public firstname: string;
+
+	@prop()
+	public lastname: string;
+
+	@prop()
+	public email: string;
+
+	@prop()
+	public address: Address;
 }
+
+export const UserModel: Model<User> = new User().getModelForClass(User);

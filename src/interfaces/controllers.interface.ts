@@ -8,4 +8,3 @@ export interface IController {
 	updateById: (req: Request, res: Response, next: NextFunction) => void;
 	deleteById: (req: Request, res: Response, next: NextFunction) => void;
 }
-

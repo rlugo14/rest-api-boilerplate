@@ -1,9 +1,9 @@
 {
 	"defaultSeverity": "error",
-	"extends": "tslint: recommended",
+	"extends": "tslint:recommended",
 	"rules": {
 		"trailing-comma": [ false ],
 		"indent": [true, "tabs", 4],
 		"object-literal-sort-keys": false
-	},
+	}
 }

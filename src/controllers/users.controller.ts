@@ -1,16 +1,18 @@
 import { NextFunction } from "connect";
 import * as express from "express";
+import { Model } from "mongoose";
 import { UserNotFoundException } from "../exceptions";
 import { HttpException } from "../exceptions/HttpException";
-import { UserModel } from "../models";
 import { IController } from "../interfaces";
+import { User } from "../models";
+import { UserModel } from "../models";
 
 class UsersController implements IController {
-	public user = UserModel;
+	public user: Model<User> = UserModel;
 
 	public getAll = (request: express.Request, response: express.Response, next: NextFunction) => {
 		this.user.find({})
-			.then((users) => {
+			.then((users: Model<User>) => {
 				response.send(users);
 			})
 			.catch((error: Error) => {
@@ -21,7 +23,7 @@ class UsersController implements IController {
 	public getById = (request: express.Request, response: express.Response, next: NextFunction) => {
 		const id = request.params.id;
 		this.user.findById(id)
-			.then((user) => {
+			.then((user: Model<User>) => {
 				if (user) {
 					response.send(user);
 				} else {
@@ -32,11 +34,9 @@ class UsersController implements IController {
 
 	public create = (request: express.Request, response: express.Response, next: NextFunction) => {
 		const userData = request.body;
-		console.log("userData = " + JSON.stringify(userData));
 		const createdIUser = new this.user(userData);
-		console.log("createdUser = " + JSON.stringify(createdIUser));
 		createdIUser.save()
-			.then((savedPost) => {
+			.then((savedPost: Model<User>) => {
 				response.send(savedPost);
 			})
 			.catch((error: Error) => {
@@ -47,11 +47,9 @@ class UsersController implements IController {
 	public updateById = (request: express.Request, response: express.Response, next: NextFunction) => {
 		const id: string = request.params.id;
 		const userData: JSON = request.body;
-		console.log("userData = " + JSON.stringify(userData));
 		this.user.findOneAndUpdate(id, userData, {new: true})
-			.then((user) => {
+			.then((user: Model<User>) => {
 				if (user) {
-					console.log("user = " + user);
 					response.send(user);
 				} else {
 					next(new UserNotFoundException(id));

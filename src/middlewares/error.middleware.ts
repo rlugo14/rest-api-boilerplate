@@ -11,4 +11,3 @@ export function errorMiddleware(error: HttpException, request: Request, response
 			message,
 		});
 }
-

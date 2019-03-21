@@ -20,11 +20,13 @@ export default function connectToDatabase(): void {
 
 	mongoose.connect(DB_URL).then(
 		() => {
-				console.log("Database connected successfully");
-			}
-		)
+			// tslint:disable-next-line: no-console
+			console.log("Database connected successfully");
+		}
+	)
 		.catch(
 			(error: Error) => {
-				console.log("Database connection error: " + error.message)
+				// tslint:disable-next-line: no-console
+				console.log("Database connection error: " + error.message);
 			});
 }

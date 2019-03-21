@@ -1,7 +1,7 @@
-import * as express from "express";
-import { validationResult, body } from "express-validator/check";
 import { NextFunction } from "connect";
+import * as express from "express";
 import { RequestHandlerParams } from "express-serve-static-core";
+import { body, validationResult } from "express-validator/check";
 
 export const userChecksMiddleware: RequestHandlerParams = [
 	body("username")
@@ -45,17 +45,16 @@ export const userChecksMiddleware: RequestHandlerParams = [
 		.isPostalCode("DE")
 		.withMessage("value should be a german postal code"),
 
-	function (req: express.Request, res: express.Response, next: NextFunction) {
+	(req: express.Request, res: express.Response, next: NextFunction) => {
 		const validationErrors = validationResult(req);
 		if (!validationErrors.isEmpty()) {
 			res.status(400).json({
 				status: 400,
 				message: "Bad Request",
 				errors: validationErrors.array()});
-		}else {
+		} else {
 			next();
-		};
+		}
 
 	},
-]
-
+];
