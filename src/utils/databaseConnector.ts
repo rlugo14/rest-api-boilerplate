@@ -10,13 +10,11 @@ const {
 	MONGO_PASSWORD,
 	DB_CONNECTION_STRING,
 	DB_SERVER,
-	DB_CONNECTION_STRING_OLD,
-	DB_SERVER_OLD,
 } = process.env;
 
 export default function connectToDatabase(): void {
 
-	const DB_URL = `${DB_CONNECTION_STRING_OLD}${MONGO_USER}:${MONGO_PASSWORD}${DB_SERVER_OLD}`;
+	const DB_URL = `${DB_CONNECTION_STRING}${MONGO_USER}:${MONGO_PASSWORD}${DB_SERVER}`;
 
 	mongoose.connect(DB_URL).then(
 		() => {
