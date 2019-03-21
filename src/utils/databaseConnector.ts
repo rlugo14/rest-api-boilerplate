@@ -9,23 +9,22 @@ const {
 	MONGO_USER,
 	MONGO_PASSWORD,
 	DB_CONNECTION_STRING,
-	DB_SERVER
+	DB_SERVER,
+	DB_CONNECTION_STRING_OLD,
+	DB_SERVER_OLD,
 } = process.env;
 
-export default function connectToDatabase(): mongoose.Connection {
+export default function connectToDatabase(): void {
 
-	const DB_URL = `${DB_CONNECTION_STRING}${MONGO_USER}:${MONGO_PASSWORD}${DB_SERVER}`;
+	const DB_URL = `${DB_CONNECTION_STRING_OLD}${MONGO_USER}:${MONGO_PASSWORD}${DB_SERVER_OLD}`;
 
 	mongoose.connect(DB_URL).then(
 		() => {
-			// tslint:disable-next-line: no-console
-			console.log("Database connected successfully!!!");
-		},
-		(error: mongoose.Error) => {
-			// tslint:disable-next-line: no-console
-			console.log("Database connection error: " + error.message);
-		}
-	);
-
-	return mongoose.createConnection(DB_URL);
+				console.log("Database connected successfully");
+			}
+		)
+		.catch(
+			(error: Error) => {
+				console.log("Database connection error: " + error.message)
+			});
 }

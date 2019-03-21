@@ -1,13 +1,13 @@
 import * as bodyParser from "body-parser";
 import * as express from "express";
 import { errorMiddleware, userChecksMiddleware } from "./middlewares";
-import UsersRouter from "./routes/users.router";
+import { IRouter } from "./interfaces";
 import connectToDatabase from "./utils/databaseConnector";
 
 class RestApi {
 	public expressApp: express.Application = express();
 
-	constructor(router: UsersRouter[]) {
+	constructor(router: IRouter[]) {
 		connectToDatabase();
 		this.initializeMiddlewares();
 		this.initializeRouter(router);
@@ -18,7 +18,7 @@ class RestApi {
 		this.expressApp.listen(process.env.PORT);
 	}
 
-	private initializeRouter(routers) {
+	private initializeRouter(routers: IRouter[]) {
 		routers.forEach((router) => {
 			this.expressApp.use("/", router.expressRouter);
 		});
@@ -26,7 +26,6 @@ class RestApi {
 
 	private initializeMiddlewares() {
 		this.expressApp.use(bodyParser.json());
-		this.expressApp.use(userChecksMiddleware)
 	}
 
 	private initializeErrorHandling() {

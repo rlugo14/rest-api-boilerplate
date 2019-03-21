@@ -1,5 +1,6 @@
 {
 	"defaultSeverity": "error",
+	"extends": "tslint: recommended",
 	"rules": {
 		"trailing-comma": [ false ],
 		"indent": [true, "tabs", 4],

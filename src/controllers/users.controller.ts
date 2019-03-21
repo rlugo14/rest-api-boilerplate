@@ -1,13 +1,12 @@
 import { NextFunction } from "connect";
 import * as express from "express";
-import { validationResult } from "express-validator/check";
 import { UserNotFoundException } from "../exceptions";
 import { HttpException } from "../exceptions/HttpException";
+import { UserModel } from "../models";
 import { IController } from "../interfaces";
-import userModel from "../models/users.model";
 
 class UsersController implements IController {
-	public user = userModel;
+	public user = UserModel;
 
 	public getAll = (request: express.Request, response: express.Response, next: NextFunction) => {
 		this.user.find({})
@@ -33,7 +32,9 @@ class UsersController implements IController {
 
 	public create = (request: express.Request, response: express.Response, next: NextFunction) => {
 		const userData = request.body;
+		console.log("userData = " + JSON.stringify(userData));
 		const createdIUser = new this.user(userData);
+		console.log("createdUser = " + JSON.stringify(createdIUser));
 		createdIUser.save()
 			.then((savedPost) => {
 				response.send(savedPost);
@@ -44,11 +45,13 @@ class UsersController implements IController {
 	}
 
 	public updateById = (request: express.Request, response: express.Response, next: NextFunction) => {
-		const id = request.params.id;
-		const userData = request.body;
-		this.user.findOneAndUpdate(id, userData, { new: true })
+		const id: string = request.params.id;
+		const userData: JSON = request.body;
+		console.log("userData = " + JSON.stringify(userData));
+		this.user.findOneAndUpdate(id, userData, {new: true})
 			.then((user) => {
 				if (user) {
+					console.log("user = " + user);
 					response.send(user);
 				} else {
 					next(new UserNotFoundException(id));

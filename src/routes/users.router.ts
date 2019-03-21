@@ -18,7 +18,7 @@ class UsersRouter implements IRouter {
 		this.expressRouter.get(path, controller.getAll);
 		this.expressRouter.get(`${path}/:id`, controller.getById);
 
-		this.expressRouter.post(path, controller.create);
+		this.expressRouter.post(path, userChecksMiddleware, controller.create);
 
 		this.expressRouter.put(`${path}/:id`, controller.updateById);
 

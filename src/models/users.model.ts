@@ -1,20 +1,38 @@
-import { Document, model, Schema } from "mongoose";
-import { IUser } from "../interfaces";
+import { Typegoose, prop, Ref } from "typegoose";
 
-const userSchema = new Schema({
-	username: String,
-	firstname: String,
-	lastname: String,
-	email: String,
-	address: {
-		city: String,
-		country: String,
-		houseNumber: String,
-		street: String,
-		postNumber: Number
-  },
-});
+class Address {
 
-const userModel = model<IUser & Document>("User", userSchema);
+	@prop({required: true})
+	city: string;
 
-export default userModel;
+	@prop({required: true})
+	country: string;
+
+	@prop({required: true})
+	houseNumber: string;
+
+	@prop({required: true})
+	street: string;
+
+	@prop({required: true})
+	postNumber: number;
+}
+export class User extends Typegoose {
+
+	@prop()
+	username: string;
+
+	@prop()
+	firstname: string;
+
+	@prop()
+	lastname: string;
+
+	@prop()
+	email: string;
+
+	@prop()
+	address?: Address;
+}
+
+export const UserModel = new User().getModelForClass(User);
