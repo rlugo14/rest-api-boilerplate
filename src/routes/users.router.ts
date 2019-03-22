@@ -1,10 +1,9 @@
-// tslint:disable:indent
 import * as express from "express";
-import UsersController from "../controllers/users.controller";
+import { UsersController } from "../controllers";
 import { IRouter } from "../interfaces";
 import { userChecksMiddleware } from "../middlewares/userValidation.middleware";
 
-class UsersRouter implements IRouter {
+export class UsersRouter implements IRouter {
 	public expressRouter: express.Router = express.Router();
 
 	constructor() {
@@ -20,10 +19,12 @@ class UsersRouter implements IRouter {
 
 		this.expressRouter.post(path, userChecksMiddleware, controller.create);
 
-		this.expressRouter.put(`${path}/:id`, controller.updateById);
+		this.expressRouter.put(
+			`${path}/:id`,
+			userChecksMiddleware,
+			controller.updateById
+		);
 
 		this.expressRouter.delete(`${path}/:id`, controller.deleteById);
 	}
 }
-
-export default UsersRouter;

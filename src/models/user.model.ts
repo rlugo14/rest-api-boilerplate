@@ -1,11 +1,14 @@
 import { Model } from "mongoose";
 import { prop, Ref, Typegoose } from "typegoose";
 import { Address } from "./address.model";
+import * as mongoose from "mongoose";
 
 export class User extends Typegoose {
-
-	@prop()
+	@prop({ required: true })
 	public username: string;
+
+	@prop({ required: true })
+	public password: string;
 
 	@prop()
 	public firstname: string;
@@ -20,4 +23,6 @@ export class User extends Typegoose {
 	public address: Address;
 }
 
-export const UserModel: Model<User> = new User().getModelForClass(User);
+export const UserModel: mongoose.Model<
+	mongoose.Document
+> = new User().getModelForClass(User);

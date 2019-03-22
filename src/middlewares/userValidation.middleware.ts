@@ -6,8 +6,15 @@ import { body, validationResult } from "express-validator/check";
 export const userChecksMiddleware: RequestHandlerParams = [
 	body("username")
 		.exists()
+		.withMessage("value is required")
 		.isAlphanumeric()
 		.withMessage("value should be alphanumeric"),
+
+	body("password")
+		.exists()
+		.withMessage("value is required")
+		.isString()
+		.withMessage("value should be a string"),
 
 	body("firstname")
 		.isString()
@@ -22,7 +29,8 @@ export const userChecksMiddleware: RequestHandlerParams = [
 		.withMessage("value should be a valid email"),
 
 	body("address")
-		.not().isEmpty()
+		.not()
+		.isEmpty()
 		.withMessage("value should not be empty"),
 
 	body("address.city")
@@ -51,10 +59,10 @@ export const userChecksMiddleware: RequestHandlerParams = [
 			res.status(400).json({
 				status: 400,
 				message: "Bad Request",
-				errors: validationErrors.array()});
+				errors: validationErrors.array()
+			});
 		} else {
 			next();
 		}
-
-	},
+	}
 ];

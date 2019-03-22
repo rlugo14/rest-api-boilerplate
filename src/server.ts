@@ -1,11 +1,9 @@
 import RestApi from "./RestApi";
-import UsersRouter from "./routes/users.router";
+import { UsersRouter, AuthenticationRouter } from "./routes";
 import validateEnv from "./utils/validateEnv";
 
 validateEnv();
 
-const api = new RestApi([
-	new UsersRouter()
-]);
+const api = new RestApi([new UsersRouter(), new AuthenticationRouter()]);
 
 api.listen();
