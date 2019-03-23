@@ -20,7 +20,7 @@ export default function connectToDatabase(): void {
 		() => {
 			// tslint:disable-next-line: no-console
 			console.log("Database connected successfully");
-		}
+		},
 	)
 		.catch(
 			(error: Error) => {

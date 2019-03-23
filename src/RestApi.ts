@@ -1,7 +1,7 @@
 import * as bodyParser from "body-parser";
 import * as express from "express";
 import { IRouter } from "./interfaces";
-import { errorMiddleware, userChecksMiddleware } from "./middlewares";
+import { errorMiddleware, userValidationMiddleware } from "./middlewares";
 import connectToDatabase from "./utils/databaseConnector";
 
 class RestApi {

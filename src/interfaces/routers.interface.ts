@@ -1,7 +1,7 @@
 import * as express from "express";
-import UsersController from "../controllers/users.controller";
+import { IController } from "./controllers.interface";
 
 export interface IRouter {
 	expressRouter: express.Router;
-	initializeRoutes: (_: UsersController) => void;
+	initializeRoutes: (_: IController) => void;
 }

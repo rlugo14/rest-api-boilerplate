@@ -1,2 +1,3 @@
 export * from "./error.middleware";
 export * from "./userValidation.middleware";
+export * from "./userLoginValidation.middleware";

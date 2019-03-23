@@ -3,7 +3,7 @@ import * as express from "express";
 import { RequestHandlerParams } from "express-serve-static-core";
 import { body, validationResult } from "express-validator/check";
 
-export const userChecksMiddleware: RequestHandlerParams = [
+export const userValidationMiddleware: RequestHandlerParams = [
 	body("username")
 		.exists()
 		.withMessage("value is required")
@@ -59,10 +59,10 @@ export const userChecksMiddleware: RequestHandlerParams = [
 			res.status(400).json({
 				status: 400,
 				message: "Bad Request",
-				errors: validationErrors.array()
+				errors: validationErrors.array(),
 			});
 		} else {
 			next();
 		}
-	}
+	},
 ];
