@@ -1,6 +1,5 @@
 import { prop } from "typegoose";
 export class Address {
-
 	@prop()
 	public city: string;
 
