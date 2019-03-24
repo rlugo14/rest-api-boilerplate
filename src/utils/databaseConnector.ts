@@ -12,7 +12,7 @@ const {
 	DB_SERVER,
 } = process.env;
 
-export default function connectToDatabase(): void {
+export function connectToDatabase(): void {
 
 	const DB_URL = `${DB_CONNECTION_STRING}${MONGO_USER}:${MONGO_PASSWORD}${DB_SERVER}`;
 

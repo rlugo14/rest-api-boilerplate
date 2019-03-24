@@ -1,3 +1,3 @@
-export { UsersRouter } from "./users.router";
-export { AuthenticationRouter } from "./authentication.router";
-export { OrdersRouter } from "./orders.router";
+export * from "./users.router";
+export * from "./authentication.router";
+export * from "./orders.router";

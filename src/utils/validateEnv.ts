@@ -1,6 +1,6 @@
 import { cleanEnv, port, str } from "envalid";
 
-export default function validateEnv() {
+export function validateEnv() {
 
 	cleanEnv(process.env, {
 		MONGO_USER: str(),
@@ -8,5 +8,6 @@ export default function validateEnv() {
 		DB_CONNECTION_STRING: str(),
 		DB_SERVER: str(),
 		PORT: port(),
+		JWT_SECRET: str(),
 	});
 }

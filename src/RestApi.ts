@@ -2,7 +2,7 @@ import * as bodyParser from "body-parser";
 import * as express from "express";
 import { IRouter } from "./interfaces";
 import { errorMiddleware } from "./middlewares";
-import connectToDatabase from "./utils/databaseConnector";
+import { connectToDatabase } from "./utils";
 
 class RestApi {
 	public expressApp: express.Application = express();

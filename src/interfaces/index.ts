@@ -1,2 +1,3 @@
-export { IController } from "./controllers.interface";
-export { IRouter } from "./routers.interface";
+export * from "./controllers.interface";
+export * from "./routers.interface";
+export * from "./tokenData.interface";

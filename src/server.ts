@@ -1,6 +1,6 @@
 import RestApi from "./RestApi";
 import { AuthenticationRouter, OrdersRouter, UsersRouter } from "./routes";
-import validateEnv from "./utils/validateEnv";
+import { validateEnv } from "./utils";
 
 validateEnv();
 
