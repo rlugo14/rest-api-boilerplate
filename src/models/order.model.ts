@@ -16,6 +16,9 @@ export class Order extends Typegoose {
 	@prop({ required: true })
 	public phoneNumber: number;
 
+	@prop({ required: false })
+	public mobilePhoneNumber?: number;
+
 	@prop({ required: true})
 	public email: string;
 
