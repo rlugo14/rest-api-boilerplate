@@ -8,19 +8,19 @@ export class User extends Typegoose {
 	public username: string;
 
 	@prop({ required: true })
-	public password: string;
+	public password?: string;
 
 	@prop()
-	public firstname: string;
+	public firstname?: string;
 
 	@prop()
-	public lastname: string;
+	public lastname?: string;
 
-	@prop()
+	@prop({required: true})
 	public email: string;
 
 	@prop()
-	public address: Address;
+	public address?: Address;
 }
 
 export const UserModel: mongoose.Model<

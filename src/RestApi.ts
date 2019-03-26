@@ -1,4 +1,5 @@
 import * as bodyParser from "body-parser";
+import * as cookieParser from "cookie-parser";
 import * as express from "express";
 import { IRouter } from "./interfaces";
 import { errorMiddleware } from "./middlewares";
@@ -19,19 +20,19 @@ class RestApi {
 	}
 
 	private initializeRouter(routers: IRouter[]) {
-		routers.forEach((router) => {
+		routers.forEach(router => {
 			this.expressApp.use("/", router.expressRouter);
 		});
 	}
 
 	private initializeMiddlewares() {
 		this.expressApp.use(bodyParser.json());
+		this.expressApp.use(cookieParser());
 	}
 
 	private initializeErrorHandling() {
 		this.expressApp.use(errorMiddleware);
 	}
-
 }
 
 export default RestApi;

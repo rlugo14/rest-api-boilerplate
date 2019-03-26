@@ -9,4 +9,5 @@ export interface IController {
 	deleteById?: (req: Request, res: Response, next: NextFunction) => void;
 	register?: (req: Request, res: Response, next: NextFunction) => void;
 	login?: (req: Request, res: Response, next: NextFunction) => void;
+	logout?: (req: Request, res: Response, next: NextFunction) => void;
 }

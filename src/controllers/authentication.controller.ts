@@ -2,7 +2,7 @@ import * as bcrypt from "bcrypt";
 import { NextFunction } from "connect";
 import * as express from "express";
 import * as jwt from "jsonwebtoken";
-import * as mongoose from "mongoose";
+import { Document } from "mongoose";
 import {
 	UserWithThatEmailAlreadyExistsException,
 	WrongCredentialsException
@@ -59,7 +59,12 @@ export class AuthenticationController implements IController {
 		}
 	};
 
-	private createToken(user: mongoose.Document): ITokenData {
+	public logout = (request: express.Request, response: express.Response) => {
+		response.setHeader('Set-Cookie', ['Authorization=;Max-age=0']);
+		response.status(200).send({status: 200, message: "logout successfully"});
+	  }
+
+	private createToken(user: Document): ITokenData {
 		const expiresIn = 60 * 60; // an hour
 		const secret = process.env.JWT_SECRET;
 		const dataStoredInToken: IDataStoredInToken = {

@@ -2,6 +2,7 @@ import { NextFunction } from "connect";
 import * as express from "express";
 import { RequestHandlerParams } from "express-serve-static-core";
 import { body, validationResult } from "express-validator/check";
+import { exists } from "fs";
 
 export const userValidationMiddleware: RequestHandlerParams = [
 	body("username")
@@ -16,40 +17,44 @@ export const userValidationMiddleware: RequestHandlerParams = [
 		.isString()
 		.withMessage("value should be a string"),
 
+	body("email")
+		.exists()
+		.withMessage("value is required")
+		.isEmail()
+		.withMessage("value should be a valid email"),
+
 	body("firstname")
+		.optional()
 		.isString()
 		.withMessage("value should be a string"),
 
 	body("lastname")
+		.optional()
 		.isString()
 		.withMessage("value should be a string"),
 
-	body("email")
-		.isEmail()
-		.withMessage("value should be a valid email"),
-
-	body("address")
-		.not()
-		.isEmpty()
-		.withMessage("value should not be empty"),
-
 	body("address.city")
+		.optional()
 		.isString()
 		.withMessage("value should be a string"),
 
 	body("address.country")
+		.optional()
 		.isString()
 		.withMessage("value should be a string"),
 
 	body("address.houseNumber")
+		.optional()
 		.isAlphanumeric()
 		.withMessage("value should be a alphanumeric"),
 
 	body("address.street")
+		.optional()
 		.isString()
 		.withMessage("value should be a string"),
 
 	body("address.postNumber")
+		.optional()
 		.isPostalCode("DE")
 		.withMessage("value should be a german postal code"),
 
@@ -59,10 +64,10 @@ export const userValidationMiddleware: RequestHandlerParams = [
 			res.status(400).json({
 				status: 400,
 				message: "Bad Request",
-				errors: validationErrors.array(),
+				errors: validationErrors.array()
 			});
 		} else {
 			next();
 		}
-	},
+	}
 ];

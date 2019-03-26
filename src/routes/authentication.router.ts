@@ -16,5 +16,7 @@ export class AuthenticationRouter implements IRouter {
 
 		this.expressRouter.post(`${path}/register`, userValidationMiddleware ,controller.register);
 		this.expressRouter.post(`${path}/login`, userLoginValidationMiddleware, controller.login);
+		this.expressRouter.post(`${path}/logout`, controller.logout);
+
 	}
 }
