@@ -14,94 +14,104 @@ export class UsersController implements IController {
 	public getAll = (
 		request: express.Request,
 		response: express.Response,
-		next: NextFunction,
+		next: NextFunction
 	) => {
 		this.user
 			.find({})
-			.then((users) => {
+			.then(users => {
 				response.send(users);
 			})
 			.catch((error: Error) => {
 				next(new HttpException(500, error.message));
 			});
-	}
+	};
 
 	public getById = (
 		request: express.Request,
 		response: express.Response,
-		next: NextFunction,
+		next: NextFunction
 	) => {
 		const id = request.params.id;
-		this.user.findById(id).then((user) => {
-			if (user) {
-				response.send(user);
-			} else {
-				next(new UserNotFoundException(id));
-			}
-		});
-	}
+		this.user
+			.findById(id)
+			.then(user => {
+				if (user) {
+					response.send(user);
+				} else {
+					next(new UserNotFoundException(id));
+				}
+			})
+			.catch(() =>
+				next(
+					new HttpException(
+						422,
+						"Unprocessable entity. The request was well-formed but was unable to be followed due to semantic errors."
+					)
+				)
+			);
+	};
 
 	public create = async (
 		request: express.Request,
 		response: express.Response,
-		next: NextFunction,
+		next: NextFunction
 	) => {
 		const userData: User = request.body;
 		const hashedPassword = await bcrypt.hash(userData.password, 10);
 
 		const createdIUser = new this.user({
 			...userData,
-			password: hashedPassword,
+			password: hashedPassword
 		});
 		await createdIUser
 			.save()
-			.then((savedPost) => {
+			.then(savedPost => {
 				userData.password = undefined;
 				response.send(savedPost);
 			})
 			.catch((error: Error) => {
 				next(new HttpException(500, error.message));
 			});
-	}
+	};
 
 	public updateById = async (
 		request: express.Request,
 		response: express.Response,
-		next: NextFunction,
+		next: NextFunction
 	) => {
 		const id: string = request.params.id;
 		const userData: User = request.body;
 		const hashedPassword = await bcrypt.hash(userData.password, 10);
 		await this.user
 			.findOneAndUpdate(id, userData, { new: true })
-			.then((user) => {
+			.then(user => {
 				if (user) {
 					const updatedUser = {
 						...userData,
-						password: hashedPassword,
+						password: hashedPassword
 					};
 					response.send(updatedUser);
 				} else {
 					next(new UserNotFoundException(id));
 				}
 			});
-	}
+	};
 
 	public deleteById = (
 		request: express.Request,
 		response: express.Response,
-		next: NextFunction,
+		next: NextFunction
 	) => {
 		const id = request.params.id;
-		this.user.findByIdAndDelete(id).then((successResponse) => {
+		this.user.findByIdAndDelete(id).then(successResponse => {
 			if (successResponse) {
 				response.json({
 					status: 200,
-					message: `the user with id: ${id} was deleted successfully`,
+					message: `the user with id: ${id} was deleted successfully`
 				});
 			} else {
 				next(new UserNotFoundException(id));
 			}
 		});
-	}
+	};
 }

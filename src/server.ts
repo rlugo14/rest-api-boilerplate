@@ -5,7 +5,6 @@ import { validateEnv } from "./utils";
 validateEnv();
 
 const api = new RestApi([
-	new UsersRouter(),
 	new AuthenticationRouter(),
 	new OrdersRouter()
 ]);

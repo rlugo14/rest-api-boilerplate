@@ -14,17 +14,11 @@ export class UsersRouter implements IRouter {
 	public initializeRoutes(controller: IController) {
 		const path: string = "/users";
 
-		this.expressRouter.get(path, controller.getAll);
-		this.expressRouter.get(`${path}/:id`, controller.getById);
-
-		this.expressRouter.post(path, userValidationMiddleware, controller.create);
-
-		this.expressRouter.put(
-			`${path}/:id`,
-			userValidationMiddleware,
-			controller.updateById,
-		);
-
-		this.expressRouter.delete(`${path}/:id`, controller.deleteById);
+		this.expressRouter
+			.get(path, controller.getAll)
+			.get(`${path}/:id`, controller.getById)
+			.post(path, userValidationMiddleware, controller.create)
+			.put(`${path}/:id`, userValidationMiddleware, controller.updateById)
+			.delete(`${path}/:id`, controller.deleteById);
 	}
 }
