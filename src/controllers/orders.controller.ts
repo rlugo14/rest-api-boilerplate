@@ -2,7 +2,7 @@ import * as bcrypt from "bcrypt";
 import { NextFunction } from "connect";
 import * as express from "express";
 import { Document, Model } from "mongoose";
-import { OrderNotFoundException } from "../exceptions";
+import { ObjectNotFoundException } from "../exceptions";
 import { HttpException } from "../exceptions/HttpException";
 import { IController } from "../interfaces";
 import { User } from "../models";
@@ -12,6 +12,7 @@ export class OrdersController implements IController {
 	private order = OrderModel;
 
 	public getAll = (
+
 		request: express.Request,
 		response: express.Response,
 		next: NextFunction
@@ -38,7 +39,7 @@ export class OrdersController implements IController {
 				if (order) {
 					response.send(order);
 				} else {
-					next(new OrderNotFoundException(id));
+					next(new ObjectNotFoundException(this.order.modelName, id));
 				}
 			})
 			.catch(() =>
@@ -87,7 +88,7 @@ export class OrdersController implements IController {
 				if (updatedOrder) {
 					response.send(updatedOrder);
 				}else {
-					next(new OrderNotFoundException(id));
+					next(new ObjectNotFoundException(this.order.modelName, id));
 				}
 			})
 			.catch(() => {
@@ -115,7 +116,7 @@ export class OrdersController implements IController {
 						message: `the order with id: ${id} was deleted successfully`
 					});
 				} else {
-					next(new OrderNotFoundException(id));
+					next(new ObjectNotFoundException(this.order.modelName, id));
 				}
 			})
 			.catch(() =>

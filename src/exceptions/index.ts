@@ -1,4 +1,4 @@
-export * from "./UserNotFoundException";
+export * from "./ObjectNotFoundException";
 export * from "./HttpException";
 export * from "./UserWithThatEmailAlreadyExistsException";
 export * from "./WrongCredentialsException";
