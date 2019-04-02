@@ -2,6 +2,7 @@ import * as express from "express";
 import { IController, IRouter } from "src/interfaces";
 import { AuthenticationController } from "../controllers";
 import {
+	authenticationMiddleware,
 	userLoginValidationMiddleware,
 	userValidationMiddleware
 } from "../middlewares";
@@ -17,7 +18,12 @@ export class AuthenticationRouter implements IRouter {
 	public initializeRoutes(controller: IController) {
 		const path = "/auth";
 
-		// this.expressRouter.post(`${path}/register`, userValidationMiddleware ,controller.register);
+		this.expressRouter.post(
+			`${path}/register`,
+			authenticationMiddleware,
+			userValidationMiddleware,
+			controller.register
+		);
 		this.expressRouter.post(
 			`${path}/login`,
 			userLoginValidationMiddleware,

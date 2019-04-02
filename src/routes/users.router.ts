@@ -1,6 +1,7 @@
 import * as express from "express";
 import { UsersController } from "../controllers";
 import { IController, IRouter } from "../interfaces";
+import { authenticationMiddleware } from "../middlewares";
 import { userValidationMiddleware } from "../middlewares/userValidation.middleware";
 
 export class UsersRouter implements IRouter {
@@ -15,6 +16,7 @@ export class UsersRouter implements IRouter {
 		const path: string = "/users";
 
 		this.expressRouter
+			.all(`${path}*`, authenticationMiddleware)
 			.get(path, controller.getAll)
 			.get(`${path}/:id`, controller.getById)
 			.post(path, userValidationMiddleware, controller.create)

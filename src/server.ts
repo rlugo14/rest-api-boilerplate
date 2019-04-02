@@ -6,7 +6,8 @@ validateEnv();
 
 const api = new RestApi([
 	new AuthenticationRouter(),
-	new OrdersRouter()
+	new OrdersRouter(),
+	new UsersRouter()
 ]);
 
 api.listen();
