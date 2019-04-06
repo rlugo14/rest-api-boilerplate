@@ -44,8 +44,9 @@ export class AuthenticationController implements IController {
 		if (user) {
 			const matchedPassword = await bcrypt.compare(
 				loginData.password,
-				user.get("password")
+				user.get("password"),
 			);
+
 			if (matchedPassword) {
 				user.set("password", undefined);
 				const tokenData = this.createToken(user);
