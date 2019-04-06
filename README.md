@@ -24,6 +24,7 @@ That was intended to follow the MVC model represented in the following image:
 ---
 
 ![Express Tutorial Part 4: Routes and controllers](https://mdn.mozillademos.org/files/14456/MVC%20Express.png "MVC Model")
+
 image source: [developer.mozilla.org](https://developer.mozilla.org/en-US/docs/Learn/Server-side/Express_Nodejs/routes "Express Tutorial Part 4: Routes and controllers
 ")
 
