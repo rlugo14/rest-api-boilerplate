@@ -23,7 +23,10 @@ export class AuthenticationController implements IController {
 			next(new UserWithThatEmailAlreadyExistsException(userData.email));
 		} else {
 			const hashedPassword = await bcrypt.hash(userData.password, 10);
-			const user = await this.user.create({...userData, password: hashedPassword});
+			const user = await this.user.create({
+				...userData,
+				password: hashedPassword
+			});
 			user.set("password", undefined);
 			const tokenData = this.createToken(user);
 			res.setHeader("Set-Cookie", [this.createCookie(tokenData)]);
