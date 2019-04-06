@@ -23,10 +23,7 @@ export class AuthenticationController implements IController {
 			next(new UserWithThatEmailAlreadyExistsException(userData.email));
 		} else {
 			const hashedPassword = await bcrypt.hash(userData.password, 10);
-			const user = await this.user.create({
-				...userData,
-				password: hashedPassword
-			});
+			const user = await this.user.create({...userData, password: hashedPassword});
 			user.set("password", undefined);
 			const tokenData = this.createToken(user);
 			res.setHeader("Set-Cookie", [this.createCookie(tokenData)]);
@@ -44,7 +41,7 @@ export class AuthenticationController implements IController {
 		if (user) {
 			const matchedPassword = await bcrypt.compare(
 				loginData.password,
-				user.get("password"),
+				user.get("password")
 			);
 
 			if (matchedPassword) {
@@ -61,9 +58,11 @@ export class AuthenticationController implements IController {
 	};
 
 	public logout = (request: express.Request, response: express.Response) => {
-		response.setHeader('Set-Cookie', ['Authorization=;Max-age=0']);
-		response.status(200).send({status: 200, message: "logout successfully"});
-	  }
+		response.setHeader("Set-Cookie", ["Authorization=;Max-age=0"]);
+		response
+			.status(200)
+			.send({ status: 200, message: "logout successfully" });
+	};
 
 	private createToken(user: Document): ITokenData {
 		const expiresIn = 60 * 60; // an hour
