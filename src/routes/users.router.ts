@@ -13,7 +13,7 @@ export class UsersRouter implements IRouter {
 	}
 
 	public initializeRoutes(controller: IController) {
-		const path: string = "/users";
+		const path: string = "/user";
 
 		this.expressRouter
 			.all(`${path}*`, authenticationMiddleware)

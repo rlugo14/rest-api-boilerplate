@@ -15,7 +15,7 @@ export class OrdersRouter implements IRouter {
 	}
 
 	public initializeRoutes(controller: IController) {
-		const path: string = "/orders";
+		const path: string = "/order";
 
 		this.expressRouter
 			.all(`${path}*`, authenticationMiddleware)
