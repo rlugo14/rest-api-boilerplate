@@ -1,7 +1,6 @@
 import * as bodyParser from "body-parser";
 import * as cookieParser from "cookie-parser";
 import * as express from "express";
-import { HttpException } from "./exceptions";
 import { IRouter } from "./interfaces";
 import { errorMiddleware } from "./middlewares";
 import { endpointValidationMiddleware } from "./middlewares/endpointValidation.middleware";
