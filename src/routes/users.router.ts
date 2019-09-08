@@ -2,7 +2,7 @@ import * as express from "express";
 import { UsersController } from "../controllers";
 import { IController, IRouter } from "../interfaces";
 import { authenticationMiddleware } from "../middlewares";
-import { userValidationMiddleware } from "../middlewares/userValidation.middleware";
+import { userValidationMiddleware } from "../middlewares";
 
 export class UsersRouter implements IRouter {
 	public expressRouter: express.Router = express.Router();

@@ -18,7 +18,7 @@ export class OrdersRouter implements IRouter {
 		const path: string = "/order";
 
 		this.expressRouter
-			.all(`${path}*`/*, authenticationMiddleware*/)
+			.all(`${path}*`, authenticationMiddleware)
 			.get(path, controller.getAll)
 			.get(`${path}/:id`, controller.getById)
 			.post(path, orderValidationMiddleware, controller.create)
