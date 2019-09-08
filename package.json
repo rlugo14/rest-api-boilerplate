@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "main": "./dist/server.js",
+  "private": true,
   "scripts": {
     "dev": "nodemon --watch src --ext ts --exec npm run dev:start",
     "dev:start": "npm-run-all build start",
@@ -18,7 +19,7 @@
   "license": "ISC",
   "dependencies": {
     "@hasezoey/typegoose": "^5.9.1",
-    "bcrypt": "^3.0.5",
+    "bcrypt": "^3.0.6",
     "body-parser": "^1.18.3",
     "cookie-parser": "^1.4.4",
     "dotenv": "^6.2.0",
