@@ -1,4 +1,4 @@
-import { prop } from "typegoose";
+import { prop } from "@hasezoey/typegoose";
 export class Address {
 	@prop()
 	public city: string;
