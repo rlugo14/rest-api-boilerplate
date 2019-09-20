@@ -1,0 +1,9 @@
+node_modules
+npm-debug.log
+.prettierrc
+.gitignore
+.env
+README.md
+.git
+.idea
+.dockerignore
