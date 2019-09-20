@@ -1,5 +1,5 @@
-import { prop, Typegoose } from "@hasezoey/typegoose";
 import * as mongoose from "mongoose";
+import { prop, Typegoose } from "typegoose";
 import { Address } from "./address.model";
 
 export class User extends Typegoose {

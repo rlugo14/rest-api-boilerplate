@@ -1,4 +1,4 @@
-import { prop } from "@hasezoey/typegoose";
+import { prop } from "typegoose";
 
 enum Gender {
 	MALE = "male",

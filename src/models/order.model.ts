@@ -1,5 +1,5 @@
-import { prop, Typegoose } from "@hasezoey/typegoose";
 import { Document, Model } from "mongoose";
+import { prop, Typegoose } from "typegoose";
 import { Address } from "./address.model";
 import { ContactPerson } from "./contactPerson.model";
 
