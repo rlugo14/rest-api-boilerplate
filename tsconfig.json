@@ -2,16 +2,14 @@
   "compilerOptions": {
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
-    "module": "commonjs",
-    "sourceMap": true,
-    "target": "es2018",
     "outDir": "dist",
-    "baseUrl": "."
-    },
+    "module": "commonjs",
+    "target": "es6",
+    "sourceMap": true,
+    "baseUrl": ".",
+    "moduleResolution": "node"
+  },
   "include": [
-    "src/**/*.ts"
-  ],
-  "exclude": [
-    "node_modules", "src/public"
+    "./src/**/*.ts"
   ]
-  }
+}
