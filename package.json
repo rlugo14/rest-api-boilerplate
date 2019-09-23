@@ -23,7 +23,7 @@
     "body-parser": "^1.18.3",
     "cookie-parser": "^1.4.4",
     "core-js": "^3.2.1",
-    "dotenv": "^6.2.0",
+    "dotenv": "^8.1.0",
     "envalid": "^4.2.2",
     "express": "^4.16.4",
     "express-validator": "^5.3.1",
