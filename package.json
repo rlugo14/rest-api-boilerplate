@@ -2,17 +2,17 @@
   "name": "rest-api",
   "version": "1.0.0",
   "description": "",
-  "main": "./dist/server.js",
   "private": true,
   "scripts": {
-    "dev": "nodemon --watch src --ext ts --exec npm run dev:start",
-    "dev:start": "npm-run-all build start",
-    "build": "npm-run-all clean lint webpack-build",
+    "dev": "npm-run-all server",
+    "server": "webpack-dev-server --watch --config webpack.dev.js",
+    "watch": "nodemon --watch dist --ext js --exec npm run start:main",
+    "build": "npm-run-all clean webpack:build",
     "clean": "rimraf dist/*",
-    "lint": "tslint -c tslint.json -p tsconfig.json --fix",
-    "webpack-build": "webpack --color --mode production --config webpack.config.js",
-    "tsc": "tsc",
-    "start": "node -r dotenv/config .",
+    "webpack:build": "webpack --config webpack.prod.js",
+    "start": "npm-run-all webpack:dev start:main",
+    "webpack:dev": "webpack --config webpack.dev.js",
+    "start:main": "node -r dotenv/config ./dist/main.js",
     "dev:typescript": "nodemon --watch src -e ts --exec ts-node ./src/server.ts"
   },
   "keywords": [],
@@ -55,6 +55,7 @@
     "webpack": "^4.40.2",
     "webpack-cli": "^3.3.9",
     "webpack-dev-server": "^3.8.1",
+    "webpack-merge": "^4.2.2",
     "webpack-node-externals": "^1.7.2"
   }
 }
