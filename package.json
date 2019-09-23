@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "nodemon --watch src -e ts --exec ts-node ./src/server.ts",
     "start": "npm-run-all clean compile start:server",
-    "start:server": "node -r dotenv/config ./dist/server.js",
+    "start:server": "node ./dist/server.js",
     "clean": "rimraf dist/*",
     "compile": "tsc"
   },

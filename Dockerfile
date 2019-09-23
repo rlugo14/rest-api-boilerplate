@@ -10,7 +10,7 @@ RUN apk add --no-cache --virtual .gyp \
     && npm install \
     && apk del .gyp
 
-RUN npm run build
+RUN npm run compile
 
 # Stage 2 - the production environment
 FROM node:10.16-alpine
@@ -24,4 +24,4 @@ RUN apk add --no-cache --virtual .gyp python make g++\
 COPY --from=builder /usr/src/app/dist ./dist
 
 EXPOSE 1414
-CMD ["node", "dist/main.js"]
+CMD ["node", "dist/server.js"]
