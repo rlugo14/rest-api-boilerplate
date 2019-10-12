@@ -4,8 +4,7 @@ import * as express from "express";
 import { ObjectNotFoundException } from "../exceptions";
 import { HttpException } from "../exceptions";
 import { Controller } from "../interfaces";
-import { User } from "../models";
-import { UserModel } from "../models";
+import { User, UserModel } from "../models";
 
 export class UsersController implements Controller {
 	private user = UserModel;

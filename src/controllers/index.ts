@@ -1,3 +1,3 @@
-export * from "./users.controller";
-export * from "./authentication.controller";
-export * from "./orders.controller";
+export * from "./users";
+export * from "./authentication";
+export * from "./orders";
