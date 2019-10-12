@@ -1,3 +1,3 @@
-export * from "./users.router";
-export * from "./authentication.router";
-export * from "./orders.router";
+export * from "./users";
+export * from "./authentication";
+export * from "./orders";
