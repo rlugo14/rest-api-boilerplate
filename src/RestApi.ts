@@ -2,8 +2,7 @@ import * as bodyParser from "body-parser";
 import * as cookieParser from "cookie-parser";
 import * as express from "express";
 import { Router } from "./interfaces";
-import { errorMiddleware } from "./middlewares";
-import { endpointValidationMiddleware } from "./middlewares/endpointValidation.middleware";
+import { errorMiddleware, endpointValidationMiddleware } from "./middlewares";
 import { connectToDatabase } from "./utils";
 
 class RestApi {
