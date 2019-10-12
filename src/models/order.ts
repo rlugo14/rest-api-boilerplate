@@ -1,7 +1,7 @@
 import { Document, Model } from "mongoose";
 import { prop, Typegoose } from "typegoose";
-import { Address } from "./address.model";
-import { ContactPerson } from "./contactPerson.model";
+import { Address } from "./address";
+import { ContactPerson } from "./contactPerson";
 
 export class Order extends Typegoose {
 	@prop({ required: true })

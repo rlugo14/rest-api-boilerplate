@@ -1,6 +1,6 @@
 import * as mongoose from "mongoose";
 import { prop, Typegoose } from "typegoose";
-import { Address } from "./address.model";
+import { Address } from "./address";
 
 export class User extends Typegoose {
 	@prop({ required: true })
