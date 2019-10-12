@@ -1,5 +1,5 @@
 import * as express from "express";
-import { Controller } from "./controllers.interface";
+import { Controller } from "./controller";
 
 export interface Router {
 	expressRouter: express.Router;
