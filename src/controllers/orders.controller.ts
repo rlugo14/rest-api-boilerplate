@@ -1,22 +1,18 @@
-import * as bcrypt from "bcrypt";
 import { NextFunction } from "connect";
 import * as express from "express";
-import { Document, Model } from "mongoose";
 import { ObjectNotFoundException } from "../exceptions";
-import { HttpException } from "../exceptions/HttpException";
-import { IController } from "../interfaces";
-import { User } from "../models";
+import { HttpException } from "../exceptions";
+import { Controller } from "../interfaces";
 import { Order, OrderModel } from "../models";
 
-export class OrdersController implements IController {
+export class OrdersController implements Controller {
 	private order = OrderModel;
 
 	public getAll = (
-
 		request: express.Request,
 		response: express.Response,
 		next: NextFunction
-	) => {
+	): void => {
 		this.order
 			.find({})
 			.then(orders => {
@@ -31,7 +27,7 @@ export class OrdersController implements IController {
 		request: express.Request,
 		response: express.Response,
 		next: NextFunction
-	) => {
+	): void => {
 		const id = request.params.id;
 		this.order
 			.findById(id)
@@ -56,7 +52,7 @@ export class OrdersController implements IController {
 		request: express.Request,
 		response: express.Response,
 		next: NextFunction
-	) => {
+	): Promise<void> => {
 		const orderData: Order = request.body;
 
 		const createdOrder = new this.order({
@@ -77,17 +73,17 @@ export class OrdersController implements IController {
 		request: express.Request,
 		response: express.Response,
 		next: NextFunction
-	) => {
+	): Promise<void> => {
 		const id: string = request.params.id;
 		const orderData: Order = request.body;
-		const order = await this.order
+		await this.order
 			.findByIdAndUpdate(id, orderData, {
 				new: true
 			})
 			.then(updatedOrder => {
 				if (updatedOrder) {
 					response.send(updatedOrder);
-				}else {
+				} else {
 					next(new ObjectNotFoundException(this.order.modelName, id));
 				}
 			})
@@ -105,7 +101,7 @@ export class OrdersController implements IController {
 		request: express.Request,
 		response: express.Response,
 		next: NextFunction
-	) => {
+	): void => {
 		const id = request.params.id;
 		this.order
 			.findByIdAndDelete(id)

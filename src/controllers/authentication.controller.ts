@@ -7,17 +7,33 @@ import {
 	UserWithThatEmailAlreadyExistsException,
 	WrongCredentialsException
 } from "../exceptions";
-import { IController, IDataStoredInToken, ITokenData } from "../interfaces";
+import { Controller, DataStoredInToken, TokenData } from "../interfaces";
 import { User, UserModel } from "../models";
 
-export class AuthenticationController implements IController {
+export class AuthenticationController implements Controller {
 	private user = UserModel;
+
+	private static createToken(user: Document): TokenData {
+		const expiresIn = 60 * 60; // an hour
+		const secret = process.env.JWT_SECRET;
+		const dataStoredInToken: DataStoredInToken = {
+			_id: user.get("_id")
+		};
+		return {
+			expiresIn,
+			token: jwt.sign(dataStoredInToken, secret, { expiresIn })
+		};
+	}
+
+	private static createCookie(tokenData: TokenData): string {
+		return `Authorization=${tokenData.token}; HttpOnly; Max-Age=${tokenData.expiresIn}`;
+	}
 
 	public register = async (
 		req: express.Request,
 		res: express.Response,
 		next: NextFunction
-	) => {
+	): Promise<void> => {
 		const userData: User = req.body;
 		if (await this.user.findOne({ email: userData.email })) {
 			next(new UserWithThatEmailAlreadyExistsException(userData.email));
@@ -28,8 +44,10 @@ export class AuthenticationController implements IController {
 				password: hashedPassword
 			});
 			user.set("password", undefined);
-			const tokenData = this.createToken(user);
-			res.setHeader("Set-Cookie", [this.createCookie(tokenData)]);
+			const tokenData = AuthenticationController.createToken(user);
+			res.setHeader("Set-Cookie", [
+				AuthenticationController.createCookie(tokenData)
+			]);
 			res.send(user);
 		}
 	};
@@ -38,7 +56,7 @@ export class AuthenticationController implements IController {
 		req: express.Request,
 		res: express.Response,
 		next: NextFunction
-	) => {
+	): Promise<void> => {
 		const loginData: User = req.body;
 		const user = await this.user.findOne({ email: loginData.email });
 		if (user) {
@@ -49,8 +67,10 @@ export class AuthenticationController implements IController {
 
 			if (matchedPassword) {
 				user.set("password", undefined);
-				const tokenData = this.createToken(user);
-				res.setHeader("Set-Cookie", [this.createCookie(tokenData)]);
+				const tokenData = AuthenticationController.createToken(user);
+				res.setHeader("Set-Cookie", [
+					AuthenticationController.createCookie(tokenData)
+				]);
 				res.send(user);
 			} else {
 				next(new WrongCredentialsException());
@@ -60,28 +80,13 @@ export class AuthenticationController implements IController {
 		}
 	};
 
-	public logout = (request: express.Request, response: express.Response) => {
+	public logout = (
+		request: express.Request,
+		response: express.Response
+	): void => {
 		response.setHeader("Set-Cookie", ["Authorization=;Max-age=0"]);
 		response
 			.status(200)
 			.send({ status: 200, message: "logout successfully" });
 	};
-
-	private createToken(user: Document): ITokenData {
-		const expiresIn = 60 * 60; // an hour
-		const secret = process.env.JWT_SECRET;
-		const dataStoredInToken: IDataStoredInToken = {
-			_id: user.get("_id")
-		};
-		return {
-			expiresIn,
-			token: jwt.sign(dataStoredInToken, secret, { expiresIn })
-		};
-	}
-
-	private createCookie(tokenData: ITokenData) {
-		return `Authorization=${tokenData.token}; HttpOnly; Max-Age=${
-			tokenData.expiresIn
-		}`;
-	}
 }

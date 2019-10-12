@@ -15,7 +15,7 @@ export class User extends Typegoose {
 	@prop()
 	public lastname?: string;
 
-	@prop({required: true})
+	@prop({ required: true })
 	public email: string;
 
 	@prop()

@@ -2,7 +2,6 @@ import { NextFunction } from "connect";
 import * as express from "express";
 import { RequestHandlerParams } from "express-serve-static-core";
 import { body, validationResult } from "express-validator/check";
-import { exists } from "fs";
 
 export const userValidationMiddleware: RequestHandlerParams = [
 	body("username")
@@ -58,7 +57,7 @@ export const userValidationMiddleware: RequestHandlerParams = [
 		.isPostalCode("DE")
 		.withMessage("value should be a german postal code"),
 
-	(req: express.Request, res: express.Response, next: NextFunction) => {
+	(req: express.Request, res: express.Response, next: NextFunction): void => {
 		const validationErrors = validationResult(req);
 		if (!validationErrors.isEmpty()) {
 			res.status(400).json({

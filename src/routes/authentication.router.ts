@@ -1,5 +1,5 @@
 import * as express from "express";
-import { IController, IRouter } from "src/interfaces";
+import { Controller, Router } from "src/interfaces";
 import { AuthenticationController } from "../controllers";
 import {
 	authenticationMiddleware,
@@ -7,7 +7,7 @@ import {
 	userValidationMiddleware
 } from "../middlewares";
 
-export class AuthenticationRouter implements IRouter {
+export class AuthenticationRouter implements Router {
 	public expressRouter: express.Router = express.Router();
 
 	constructor() {
@@ -15,7 +15,7 @@ export class AuthenticationRouter implements IRouter {
 		this.initializeRoutes(authController);
 	}
 
-	public initializeRoutes(controller: IController) {
+	public initializeRoutes(controller: Controller): void {
 		const path = "/auth";
 
 		this.expressRouter.post(

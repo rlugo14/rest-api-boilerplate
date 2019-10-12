@@ -1,12 +1,12 @@
 import * as express from "express";
 import { OrdersController } from "../controllers";
-import { IController, IRouter } from "../interfaces";
+import { Controller, Router } from "../interfaces";
 import {
 	authenticationMiddleware,
 	orderValidationMiddleware
 } from "../middlewares";
 
-export class OrdersRouter implements IRouter {
+export class OrdersRouter implements Router {
 	public expressRouter: express.Router = express.Router();
 
 	constructor() {
@@ -14,8 +14,8 @@ export class OrdersRouter implements IRouter {
 		this.initializeRoutes(orderController);
 	}
 
-	public initializeRoutes(controller: IController) {
-		const path: string = "/order";
+	public initializeRoutes(controller: Controller): void {
+		const path = "/order";
 
 		this.expressRouter
 			.all(`${path}*`, authenticationMiddleware)

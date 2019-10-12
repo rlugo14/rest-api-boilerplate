@@ -10,7 +10,7 @@ export class Order extends Typegoose {
 	@prop({ required: true })
 	public contactPerson: ContactPerson;
 
-	@prop({ required: true})
+	@prop({ required: true })
 	public address: Address;
 
 	@prop({ required: true })
@@ -19,16 +19,16 @@ export class Order extends Typegoose {
 	@prop({ required: false })
 	public mobilePhoneNumber?: number;
 
-	@prop({ required: true})
+	@prop({ required: true })
 	public email: string;
 
 	@prop({ required: true })
 	public vat: string;
 
-	@prop({ required: true})
+	@prop({ required: true })
 	public orderNumber: number;
 
-	@prop({ required: true})
+	@prop({ required: true })
 	public orderCreationDate: Date;
 }
 

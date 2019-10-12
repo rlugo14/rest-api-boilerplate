@@ -1,11 +1,7 @@
 import { NextFunction } from "connect";
 import * as express from "express";
 import { RequestHandlerParams } from "express-serve-static-core";
-import {
-	body,
-	CustomValidator,
-	validationResult
-} from "express-validator/check";
+import { body, validationResult } from "express-validator/check";
 
 export const orderValidationMiddleware: RequestHandlerParams = [
 	body("restaurant")
@@ -51,7 +47,7 @@ export const orderValidationMiddleware: RequestHandlerParams = [
 
 	body("phoneNumber")
 		.custom((value: string) => {
-			const regex = /(^(\+49|0049|49)?)(0?(?!31|32)([2-9]{1})([0-9]{1})([0-9]{1,2})(\d{3,7}))/gm;
+			const regex = /(^(\+49|0049|49)?)(0?(?!31|32)([2-9])([0-9])([0-9]{1,2})(\d{3,7}))/gm;
 			const filteredValue = regex.exec(value);
 			if (filteredValue === null) {
 				throw new Error("value is not a valid german landline number");
@@ -103,7 +99,7 @@ export const orderValidationMiddleware: RequestHandlerParams = [
 		.isPostalCode("DE")
 		.withMessage("value should be a german postal code"),
 
-	(req: express.Request, res: express.Response, next: NextFunction) => {
+	(req: express.Request, res: express.Response, next: NextFunction): void => {
 		const validationErrors = validationResult(req);
 		if (!validationErrors.isEmpty()) {
 			res.status(400).json({

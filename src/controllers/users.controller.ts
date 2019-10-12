@@ -1,21 +1,20 @@
 import * as bcrypt from "bcrypt";
 import { NextFunction } from "connect";
 import * as express from "express";
-import { Model } from "mongoose";
 import { ObjectNotFoundException } from "../exceptions";
-import { HttpException } from "../exceptions/HttpException";
-import { IController } from "../interfaces";
+import { HttpException } from "../exceptions";
+import { Controller } from "../interfaces";
 import { User } from "../models";
 import { UserModel } from "../models";
 
-export class UsersController implements IController {
+export class UsersController implements Controller {
 	private user = UserModel;
 
 	public getAll = (
 		request: express.Request,
 		response: express.Response,
 		next: NextFunction
-	) => {
+	): void => {
 		this.user
 			.find({})
 			.then(users => {
@@ -26,11 +25,12 @@ export class UsersController implements IController {
 			});
 	};
 
+	// noinspection DuplicatedCode
 	public getById = (
 		request: express.Request,
 		response: express.Response,
 		next: NextFunction
-	) => {
+	): void => {
 		const id = request.params.id;
 		this.user
 			.findById(id)
@@ -55,7 +55,7 @@ export class UsersController implements IController {
 		request: express.Request,
 		response: express.Response,
 		next: NextFunction
-	) => {
+	): Promise<void> => {
 		const userData: User = request.body;
 		const hashedPassword = await bcrypt.hash(userData.password, 10);
 
@@ -78,7 +78,7 @@ export class UsersController implements IController {
 		request: express.Request,
 		response: express.Response,
 		next: NextFunction
-	) => {
+	): Promise<void> => {
 		const id: string = request.params.id;
 		const userData: User = request.body;
 		const hashedPassword = await bcrypt.hash(userData.password, 10);
@@ -101,7 +101,7 @@ export class UsersController implements IController {
 		request: express.Request,
 		response: express.Response,
 		next: NextFunction
-	) => {
+	): void => {
 		const id = request.params.id;
 		this.user.findByIdAndDelete(id).then(successResponse => {
 			if (successResponse) {

@@ -1,8 +1,8 @@
-export interface ITokenData {
+export interface TokenData {
 	token: string;
 	expiresIn: number;
 }
 
-export interface IDataStoredInToken {
+export interface DataStoredInToken {
 	_id: string;
 }
