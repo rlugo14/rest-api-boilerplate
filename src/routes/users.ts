@@ -1,8 +1,10 @@
 import * as express from "express";
 import { UsersController } from "../controllers";
 import { Controller, Router } from "../interfaces";
-import { authentication } from "../middlewares";
-import { userValidation } from "../middlewares";
+import {
+	authenticationMiddleware,
+	userValidationMiddleware
+} from "../middlewares";
 
 export class UsersRouter implements Router {
 	public expressRouter: express.Router = express.Router();
@@ -16,11 +18,11 @@ export class UsersRouter implements Router {
 		const path = "/user";
 
 		this.expressRouter
-			.all(`${path}*`, authentication)
+			.all(`${path}*`, authenticationMiddleware)
 			.get(path, controller.getAll)
 			.get(`${path}/:id`, controller.getById)
-			.post(path, userValidation, controller.create)
-			.put(`${path}/:id`, userValidation, controller.updateById)
+			.post(path, userValidationMiddleware, controller.create)
+			.put(`${path}/:id`, userValidationMiddleware, controller.updateById)
 			.delete(`${path}/:id`, controller.deleteById);
 	}
 }
