@@ -3,7 +3,7 @@ import * as express from "express";
 import { RequestHandlerParams } from "express-serve-static-core";
 import { body, validationResult } from "express-validator/check";
 
-export const userValidation: RequestHandlerParams = [
+export const userValidationMiddleware: RequestHandlerParams = [
 	body("username")
 		.exists()
 		.withMessage("value is required")
