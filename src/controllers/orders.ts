@@ -3,7 +3,7 @@ import * as express from "express";
 import { ObjectNotFoundException } from "../exceptions";
 import { HttpException } from "../exceptions";
 import { Controller } from "../interfaces";
-import { Order, OrderModel } from "../models";
+import { OrderModel } from "../models";
 
 export class OrdersController implements Controller {
 	private order = OrderModel;
@@ -53,7 +53,7 @@ export class OrdersController implements Controller {
 		response: express.Response,
 		next: NextFunction
 	): Promise<void> => {
-		const orderData: Order = request.body;
+		const orderData = request.body;
 
 		const createdOrder = new this.order({
 			...orderData,
@@ -75,7 +75,7 @@ export class OrdersController implements Controller {
 		next: NextFunction
 	): Promise<void> => {
 		const id: string = request.params.id;
-		const orderData: Order = request.body;
+		const orderData = request.body;
 		await this.order
 			.findByIdAndUpdate(id, orderData, {
 				new: true

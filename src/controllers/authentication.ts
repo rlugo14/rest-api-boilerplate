@@ -8,7 +8,7 @@ import {
 	WrongCredentialsException
 } from "../exceptions";
 import { Controller, DataStoredInToken, TokenData } from "../interfaces";
-import { User, UserModel } from "../models";
+import { UserModel } from "../models";
 
 export class AuthenticationController implements Controller {
 	private user = UserModel;
@@ -34,7 +34,7 @@ export class AuthenticationController implements Controller {
 		res: express.Response,
 		next: NextFunction
 	): Promise<void> => {
-		const userData: User = req.body;
+		const userData = req.body;
 		if (await this.user.findOne({ email: userData.email })) {
 			next(new UserWithThatEmailAlreadyExistsException(userData.email));
 		} else {
@@ -57,7 +57,7 @@ export class AuthenticationController implements Controller {
 		res: express.Response,
 		next: NextFunction
 	): Promise<void> => {
-		const loginData: User = req.body;
+		const loginData = req.body;
 		const user = await this.user.findOne({ email: loginData.email });
 		if (user) {
 			const matchedPassword = await bcrypt.compare(

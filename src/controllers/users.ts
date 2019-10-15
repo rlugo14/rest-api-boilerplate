@@ -4,7 +4,7 @@ import * as express from "express";
 import { ObjectNotFoundException } from "../exceptions";
 import { HttpException } from "../exceptions";
 import { Controller } from "../interfaces";
-import { User, UserModel } from "../models";
+import { UserModel } from "../models";
 
 export class UsersController implements Controller {
 	private user = UserModel;
@@ -55,7 +55,7 @@ export class UsersController implements Controller {
 		response: express.Response,
 		next: NextFunction
 	): Promise<void> => {
-		const userData: User = request.body;
+		const userData = request.body;
 		const hashedPassword = await bcrypt.hash(userData.password, 10);
 
 		const createdIUser = new this.user({
@@ -79,7 +79,7 @@ export class UsersController implements Controller {
 		next: NextFunction
 	): Promise<void> => {
 		const id: string = request.params.id;
-		const userData: User = request.body;
+		const userData = request.body;
 		const hashedPassword = await bcrypt.hash(userData.password, 10);
 		await this.user
 			.findOneAndUpdate(id, userData, { new: true })
