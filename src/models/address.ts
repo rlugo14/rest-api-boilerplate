@@ -1,17 +1,9 @@
-import { prop } from "typegoose";
-export class Address {
-	@prop()
-	public city: string;
+import { createSchema, Type } from "ts-mongoose";
 
-	@prop()
-	public country: string;
-
-	@prop()
-	public houseNumber: string;
-
-	@prop()
-	public street: string;
-
-	@prop()
-	public postNumber: number;
-}
+export const AddressSchema = createSchema({
+	city: Type.optionalString(),
+	country: Type.optionalString(),
+	houseNumber: Type.optionalString(),
+	street: Type.optionalString(),
+	postNumber: Type.optionalNumber()
+});

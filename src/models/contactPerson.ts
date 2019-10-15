@@ -1,17 +1,9 @@
-import { prop } from "typegoose";
+import { createSchema, Type } from "ts-mongoose";
 
-enum Gender {
-	MALE = "male",
-	FEMALE = "female"
-}
+const genders = ["male", "female"] as const;
 
-export class ContactPerson {
-	@prop()
-	public firstname: string;
-
-	@prop()
-	public lastname: string;
-
-	@prop({ enum: Gender })
-	public gender: Gender;
-}
+export const ContactPersonSchema = createSchema({
+	firstname: Type.optionalString(),
+	lastname: Type.optionalString(),
+	gender: Type.optionalString({ enum: genders })
+});

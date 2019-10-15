@@ -1,27 +1,13 @@
-import * as mongoose from "mongoose";
-import { prop, Typegoose } from "typegoose";
-import { Address } from "./address";
+import { createSchema, Type, typedModel } from "ts-mongoose";
+import { AddressSchema } from "./address";
 
-export class User extends Typegoose {
-	@prop({ required: true })
-	public username: string;
+const UserSchema = createSchema({
+	username: Type.string(),
+	password: Type.string(),
+	firstname: Type.optionalString(),
+	lastname: Type.optionalString(),
+	email: Type.string(),
+	address: Type.optionalSchema().of(AddressSchema)
+});
 
-	@prop({ required: true })
-	public password?: string;
-
-	@prop()
-	public firstname?: string;
-
-	@prop()
-	public lastname?: string;
-
-	@prop({ required: true })
-	public email: string;
-
-	@prop()
-	public address?: Address;
-}
-
-export const UserModel: mongoose.Model<
-	mongoose.Document
-> = new User().getModelForClass(User);
+export const UserModel = typedModel("User", UserSchema);
