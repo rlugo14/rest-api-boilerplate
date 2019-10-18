@@ -8,14 +8,15 @@ import { OrderModel } from "../models";
 export class OrdersController implements Controller {
 	private order = OrderModel;
 
-	public getAll = (
+	public getAll = async (
 		request: express.Request,
 		response: express.Response,
 		next: NextFunction
-	): void => {
-		this.order
+	): Promise<void> => {
+		await this.order
 			.find({})
 			.then(orders => {
+				response.status(200);
 				response.send(orders);
 			})
 			.catch((err: Error) => {
@@ -23,16 +24,17 @@ export class OrdersController implements Controller {
 			});
 	};
 
-	public getById = (
+	public getById = async (
 		request: express.Request,
 		response: express.Response,
 		next: NextFunction
-	): void => {
+	): Promise<void> => {
 		const id = request.params.id;
-		this.order
+		await this.order
 			.findById(id)
 			.then(order => {
 				if (order) {
+					response.status(200);
 					response.send(order);
 				} else {
 					next(new ObjectNotFoundException(this.order.modelName, id));
@@ -62,6 +64,7 @@ export class OrdersController implements Controller {
 		await createdOrder
 			.save()
 			.then(savedOrder => {
+				response.status(200);
 				response.send(savedOrder);
 			})
 			.catch((err: Error) => {
@@ -82,6 +85,7 @@ export class OrdersController implements Controller {
 			})
 			.then(updatedOrder => {
 				if (updatedOrder) {
+					response.status(200);
 					response.send(updatedOrder);
 				} else {
 					next(new ObjectNotFoundException(this.order.modelName, id));
@@ -97,31 +101,32 @@ export class OrdersController implements Controller {
 			});
 	};
 
-	public deleteById = (
+	public deleteById = async (
 		request: express.Request,
 		response: express.Response,
 		next: NextFunction
-	): void => {
+	): Promise<void> => {
 		const id = request.params.id;
-		this.order
+		await this.order
 			.findByIdAndDelete(id)
 			.then(successResponse => {
 				if (successResponse) {
+					response.status(200);
 					response.json({
-						status: 200,
 						message: `the order with id: ${id} was deleted successfully`
 					});
+					response.send();
 				} else {
 					next(new ObjectNotFoundException(this.order.modelName, id));
 				}
 			})
-			.catch(() =>
+			.catch(() => {
 				next(
 					new HttpException(
 						422,
 						"Unprocessable entity. The request was well-formed but was unable to be followed due to semantic errors."
 					)
-				)
-			);
+				);
+			});
 	};
 }

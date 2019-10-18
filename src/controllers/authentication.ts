@@ -84,7 +84,7 @@ export class AuthenticationController implements Controller {
 		request: express.Request,
 		response: express.Response
 	): void => {
-		response.setHeader("Set-Cookie", ["Authorization=;Max-age=0"]);
+		response.setHeader("Set-Cookie", "Authorization=;Max-age=0");
 		response
 			.status(200)
 			.send({ status: 200, message: "logout successfully" });
