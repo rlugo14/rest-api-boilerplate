@@ -61,7 +61,6 @@ export const orderValidationMiddleware: RequestHandlerParams = [
 		),
 
 	body("mobilePhoneNumber")
-		.not()
 		.optional()
 		.isMobilePhone("de-DE")
 		.withMessage("value is not a valid german mobile number"),
