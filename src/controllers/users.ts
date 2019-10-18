@@ -9,14 +9,15 @@ import { UserModel } from "../models";
 export class UsersController implements Controller {
 	private user = UserModel;
 
-	public getAll = (
+	public getAll = async (
 		request: express.Request,
 		response: express.Response,
 		next: NextFunction
-	): void => {
-		this.user
+	): Promise<void> => {
+		await this.user
 			.find({})
 			.then(users => {
+				response.status(200);
 				response.send(users);
 			})
 			.catch((error: Error) => {
@@ -25,16 +26,17 @@ export class UsersController implements Controller {
 	};
 
 	// noinspection DuplicatedCode
-	public getById = (
+	public getById = async (
 		request: express.Request,
 		response: express.Response,
 		next: NextFunction
-	): void => {
+	): Promise<void> => {
 		const id = request.params.id;
-		this.user
+		await this.user
 			.findById(id)
 			.then(user => {
 				if (user) {
+					response.status(200);
 					response.send(user);
 				} else {
 					next(new ObjectNotFoundException(this.user.modelName, id));
@@ -66,6 +68,7 @@ export class UsersController implements Controller {
 			.save()
 			.then(savedPost => {
 				userData.password = undefined;
+				response.status(200);
 				response.send(savedPost);
 			})
 			.catch((error: Error) => {
@@ -89,6 +92,7 @@ export class UsersController implements Controller {
 						...userData,
 						password: hashedPassword
 					};
+					response.status(200);
 					response.send(updatedUser);
 				} else {
 					next(new ObjectNotFoundException(this.user.modelName, id));
@@ -96,16 +100,16 @@ export class UsersController implements Controller {
 			});
 	};
 
-	public deleteById = (
+	public deleteById = async (
 		request: express.Request,
 		response: express.Response,
 		next: NextFunction
-	): void => {
+	): Promise<void> => {
 		const id = request.params.id;
-		this.user.findByIdAndDelete(id).then(successResponse => {
+		await this.user.findByIdAndDelete(id).then(successResponse => {
 			if (successResponse) {
+				response.status(200);
 				response.json({
-					status: 200,
 					message: `the user with id: ${id} was deleted successfully`
 				});
 			} else {
