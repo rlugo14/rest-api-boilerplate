@@ -7,7 +7,7 @@ const OrderSchema = createSchema({
 	contactPerson: Type.schema().of(ContactPersonSchema),
 	address: Type.schema().of(AddressSchema),
 	phoneNumber: Type.number(),
-	mobilePhoneNumber: Type.number(),
+	mobilePhoneNumber: Type.optionalNumber(),
 	email: Type.string(),
 	vat: Type.string(),
 	orderNumber: Type.number(),

@@ -4,6 +4,6 @@ const genders = ["male", "female"] as const;
 
 export const ContactPersonSchema = createSchema({
 	firstname: Type.optionalString(),
-	lastname: Type.optionalString(),
-	gender: Type.optionalString({ enum: genders })
+	lastname: Type.string(),
+	gender: Type.string({ enum: genders })
 });

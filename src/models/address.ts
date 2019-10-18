@@ -1,9 +1,9 @@
 import { createSchema, Type } from "ts-mongoose";
 
 export const AddressSchema = createSchema({
-	city: Type.optionalString(),
-	country: Type.optionalString(),
-	houseNumber: Type.optionalString(),
-	street: Type.optionalString(),
-	postNumber: Type.optionalNumber()
+	city: Type.string(),
+	country: Type.string(),
+	houseNumber: Type.string(),
+	street: Type.string(),
+	postNumber: Type.number()
 });
