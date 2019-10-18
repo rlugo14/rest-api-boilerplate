@@ -13,13 +13,7 @@ let next;
 const testPreConfig = (): void => {
 	next = sinon.spy();
 	mockingoose.resetAll();
-	req = mockRequest({
-		body: {
-			email: "testEmail",
-			password: "testPassword",
-			username: "testUsername"
-		}
-	});
+	req = mockRequest();
 	res = mockResponse();
 };
 
@@ -45,7 +39,7 @@ describe("Orders controller 'getAll' method", () => {
 describe("Orders controller 'getById' method", () => {
 	beforeEach(testPreConfig);
 	it("should set status code 200 when document exist", async () => {
-		mockingoose(OrderModel).toReturn(req.body, "findOne");
+		mockingoose(OrderModel).toReturn({}, "findOne");
 		await ordersController.getById(req, res, next);
 		expect(res.status.args[0][0]).toBe(200);
 	});
@@ -120,7 +114,6 @@ describe("Orders controller 'create' method", () => {
 		jest.spyOn(OrderModel.prototype, "save").mockImplementationOnce(() =>
 			Promise.resolve()
 		);
-		// mockingoose(OrderModel).toReturn(Promise.resolve(), "save");
 		await ordersController.create(req, res, next);
 	});
 
