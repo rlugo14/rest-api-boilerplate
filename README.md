@@ -1,4 +1,4 @@
-# Rest API Boilerplate (Node.js, Express and Typescript)
+# Rest API Boilerplate (Node.js, Express and Typescript)[![Build Status](https://travis-ci.com/rlugo14/rest-api-boilerplate.svg?branch=master)](https://travis-ci.com/rlugo14/rest-api-boilerplate)
 
 This Rest API boiler plate was created using different "often used" technologies for example:
 
