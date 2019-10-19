@@ -1,3 +1,10 @@
 language: node_js
 node_js:
-  - 10
+  - "10"
+os:
+  - linux
+  - osx
+install:
+  - npm install
+script:
+  - npm run test
